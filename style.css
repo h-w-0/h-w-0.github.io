@@ -174,6 +174,19 @@ body {
     padding: 1.5rem;
 }
 
+
+.sidebar-content a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.sidebar-content a:hover {
+    color: var(--accent);
+}
+
 .related-sites {
     margin: 2rem 0;
 }
@@ -232,18 +245,6 @@ body {
 
 .social-links li {
     margin-bottom: 0.75rem;
-}
-
-.social-links a {
-    color: var(--primary-dark);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s;
-}
-
-.social-links a:hover {
-    color: var(--accent);
 }
 
 .social-links i {
