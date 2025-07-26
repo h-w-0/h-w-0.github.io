@@ -7,6 +7,10 @@
     --text-color: #333;
     --text-light: #fff;
     --border-color: rgba(50, 75, 78, 0.2);
+
+    --link-color: 100, 100, 200;
+    --hover-link-color: 61, 172, 214;
+    --visited-link-color: var(--link-color);
     
     /* 布局变量 */
     --sidebar-width: 280px;
@@ -280,7 +284,7 @@ body {
 }
 
 #nav-side a {
-    color: var(--primary-dark);
+    color: var(--link-color);
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -288,7 +292,7 @@ body {
 }
 
 #nav-side a:hover {
-    color: var(--accent);
+    color: var(--hover-link-color);
 }
 
 
