@@ -279,7 +279,7 @@ body {
     }
 }
 
-.nav-side a {
+#nav-side a {
     color: var(--primary-dark);
     text-decoration: none;
     display: flex;
@@ -287,12 +287,12 @@ body {
     transition: color 0.3s;
 }
 
-.nav-side a:hover {
+#nav-side a:hover {
     color: var(--accent);
 }
 
 
-#side-bar .close-menu {
+#nav-side .close-menu {
     position: fixed;
     top: 0;
     right: 0;
@@ -309,7 +309,7 @@ body {
 }
 
 @media only screen and (max-width: 1024px) {
-    #side-bar:target .close-menu {
+    #nav-side:target .close-menu {
         opacity: 1;
         pointer-events: auto;
         width: calc(100% - min(var(--sidebar-width-on-mobile), 100% - 3rem));
