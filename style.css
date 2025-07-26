@@ -53,7 +53,7 @@ body {
     align-items: center;
     position: relative;
     width: 100%;
-    padding-left: 60px; /* 给菜单按钮留出空间 */
+    padding-left: 60px;
 }
 
 #nav-top li {
@@ -198,19 +198,6 @@ body {
     padding: 1.5rem;
 }
 
-
-.sidebar-content a {
-    color: var(--primary-dark);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s;
-}
-
-.sidebar-content a:hover {
-    color: var(--accent);
-}
-
 .related-sites {
     margin: 2rem 0;
 }
@@ -290,4 +277,16 @@ body {
     transform: translateX(0);
                 opacity: 1;
     }
+}
+
+.nav-side a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.nav-side a:hover {
+    color: var(--accent);
 }
