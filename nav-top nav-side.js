@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 处理nav-top
+    // nav-top
     const navTop = document.getElementById('nav-top');
     if (navTop) {
         const navTopContent = `
@@ -34,14 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
         navTop.innerHTML = navTopContent;
     }
 
-    // 处理nav-side
+    // nav-side
     const navSide = document.getElementById('nav-side');
     if (navSide) {
         const navSideContent = `
             <div class="sidebar-content">
                 <h3>个人网站</h3>
-                
-                    <h3>社交媒体</h3>
                     <ul>
                         <li>
                             <a href="https://lostmedia.wikidot.com/" target="_blank">
