@@ -290,3 +290,28 @@ body {
 .nav-side a:hover {
     color: var(--accent);
 }
+
+
+#side-bar .close-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 100vh;
+    width: 100%;
+    transition: opacity 0.25s ease 0.125s, width 0.25s ease 0.125s;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(var(--popup-fader-color));
+    opacity: 0;
+    -webkit-backdrop-filter: blur(var(--general-blur));
+    backdrop-filter: blur(var(--general-blur));
+}
+
+@media only screen and (max-width: 1024px) {
+    #side-bar:target .close-menu {
+        opacity: 1;
+        pointer-events: auto;
+        width: calc(100% - min(var(--sidebar-width-on-mobile), 100% - 3rem));
+    }
+}
