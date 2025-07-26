@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navTop) {
         const navTopContent = `
             <div class="open-menu">
-                <p><a href="#" id="menu-toggle"><i class="fas fa-bars"></i></a></p>
+                <p><a href="#nav-side" id="menu-toggle"><i class="fas fa-bars"></i></a></p>
             </div>
             <ul>
                 <li class="nav-item">
