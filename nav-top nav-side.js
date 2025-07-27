@@ -124,9 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navHeader) {
         const HeaderContent = `
 
-    <div id="container-wrap">
-        <div id="container">
-            <div id="header">
+
               <h1><a href="https://lostmedia.wikidot.com/"><span>失传媒体中文维基</span></a></h1>
                 
                     <h2><span>Lost Media CN Wiki</span></h2>
@@ -135,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div id="search-top-box" class="form-search">
     <form id="search-top-box-form" action="/" class="input-append">
         <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="" ><input class="button btn" type="submit" name="search" value="搜索">
-    </form>
+    </form></div>
 
         `;
         navHeader.innerHTML = HeaderContent;
