@@ -305,7 +305,7 @@ body {
 
 /*隐藏按钮怎么做啊*/
 
-#nav-side .close-menu {
+#nav-side.nav-close-menu .close-menu {
     position: fixed;
     top: 0;
     right: 0;
@@ -322,7 +322,7 @@ body {
 }
 
 @media only screen and (max-width: 1024px) {
-  #nav-side:target .close-menu {
+  .nav-close-menu#nav-side:target .close-menu {
         opacity: 1;
         pointer-events: auto;
         width: calc(100% - min(var(--sidebar-width-on-mobile), 100% - 3rem));
