@@ -5,77 +5,79 @@ document.addEventListener('DOMContentLoaded', function() {
         const navTopContent = `
 
 <div class="top-bar">
-<ul>
-<li><a href="javascript:;">自己站导航
-</a><ul>
-<li><a href="https://lostmedia.wikidot.com/">失传媒体中文维基</a>
-<ul>
-<li><a href="https://lostmedia.wikidot.com/forum:recent-posts">最近发帖</a></li>
-</ul></li>
-<li><a href="https://backrooms-to-dv.wikidot.com/">后室TODV</a>
-<ul>
-<li><a href="https://backrooms-to-dv.wikidot.com/forum:recent-posts">最近发帖</a></li>
-</ul></li>
-<li><a href="https://backrooms-arch-cn.wikidot.com/">后室被删除页面记录</a></li>
-<li><a href="https://h-w-0.wikidot.com/">荒废的私站</a></li>
-<li><a href="https://lostmedia.cn/">失传媒体CN域名</a></li>
-</ul>
-</li>
-
-
-
-<li><a href="javascript:;">常用站导航
-</a><ul>
-<li><a href="https://backrooms-wiki-cn.wikidot.com/">后室中文</a>
-<ul>
-<li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
-</ul></li>
-
-<li><a href="https://scp-wiki-cn.wikidot.com/">SCP基金会</a>
-<ul>
-<li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
-</ul></li>
-<li><a href="https://brsandbox-pro.wikidot.com/">后室沙盒Pro</a></li>
-<li><a href="https://brsandbox-mini.wikidot.com/">后室沙盒Mini</a></li>
-</ul>
-</li>
-<li><a href="/">主页</li>
-</ul>
-</li>
-</ul>
+  <ul>
+    <li>
+      <a href="javascript:;">自己站导航</a>
+      <ul>
+        <li>
+          <a href="https://lostmedia.wikidot.com/">失传媒体中文维基</a>
+          <ul>
+            <li><a href="https://lostmedia.wikidot.com/forum:recent-posts">最近发帖</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://backrooms-to-dv.wikidot.com/">后室TODV</a>
+          <ul>
+            <li><a href="https://backrooms-to-dv.wikidot.com/forum:recent-posts">最近发帖</a></li>
+          </ul>
+        </li>
+        <li><a href="https://backrooms-arch-cn.wikidot.com/">后室被删除页面记录</a></li>
+        <li><a href="https://h-w-0.wikidot.com/">荒废的私站</a></li>
+        <li><a href="https://lostmedia.cn/">失传媒体CN域名</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="javascript:;">常用站导航</a>
+      <ul>
+        <li>
+          <a href="https://backrooms-wiki-cn.wikidot.com/">后室中文</a>
+          <ul>
+            <li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://scp-wiki-cn.wikidot.com/">SCP基金会</a>
+          <ul>
+            <li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
+          </ul>
+        </li>
+        <li><a href="https://brsandbox-pro.wikidot.com/">后室沙盒Pro</a></li>
+        <li><a href="https://brsandbox-mini.wikidot.com/">后室沙盒Mini</a></li>
+      </ul>
+    </li>
+    <li><a href="/">主页</a></li>
+  </ul>
 </div>
 
 <div class="mobile-top-bar">
-<div class="open-menu">
-<p><a href="#side-bar">≡</a></p>
-</div>
-<ul>
-
-<li><a href="javascript:;">自己站导航
-</a><ul>
-<li><a href="https://lostmedia.wikidot.com/">失传媒体中文维基</a></li>
-<li><a href="https://backrooms-to-dv.wikidot.com/">后室TODV</a></li>
-<li><a href="https://backrooms-arch-cn.wikidot.com/">后室被删除页面记录</a></li>
-<li><a href="https://h-w-0.wikidot.com/">荒废的私站</a></li>
-<li><a href="https://lostmedia.cn/">失传媒体CN域名</a></li>
-</ul>
-</li>
-
-<li><a href="javascript:;">常用站导航
-</a><ul>
-<li><a href="https://backrooms-wiki-cn.wikidot.com/">后室中文</a></li>
-<li><a href="https://scp-wiki-cn.wikidot.com/">基金会中文</a></li>
-<li><a href="https://brsandbox-pro.wikidot.com/">后室沙盒Pro</a></li>
-<li><a href="https://brsandbox-mini.wikidot.com/">后室沙盒Mini</a></li>
-<li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">BKR最近发帖</a></li>
-<li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">SCP最近发帖</a></li>
-<li><a href="https://lostmedia.wikidot.com/forum:recent-posts">LM最近发帖</a></li>
-</ul>
-</li>
-
-<li><a href="/">主页</li>
-
-</ul>
+  <div class="open-menu">
+    <p><a href="#side-bar">≡</a></p>
+  </div>
+  <ul>
+    <li>
+      <a href="javascript:;">自己站导航</a>
+      <ul>
+        <li><a href="https://lostmedia.wikidot.com/">失传媒体中文维基</a></li>
+        <li><a href="https://backrooms-to-dv.wikidot.com/">后室TODV</a></li>
+        <li><a href="https://backrooms-arch-cn.wikidot.com/">后室被删除页面记录</a></li>
+        <li><a href="https://h-w-0.wikidot.com/">荒废的私站</a></li>
+        <li><a href="https://lostmedia.cn/">失传媒体CN域名</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="javascript:;">常用站导航</a>
+      <ul>
+        <li><a href="https://backrooms-wiki-cn.wikidot.com/">后室中文</a></li>
+        <li><a href="https://scp-wiki-cn.wikidot.com/">基金会中文</a></li>
+        <li><a href="https://brsandbox-pro.wikidot.com/">后室沙盒Pro</a></li>
+        <li><a href="https://brsandbox-mini.wikidot.com/">后室沙盒Mini</a></li>
+        <li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">BKR最近发帖</a></li>
+        <li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">SCP最近发帖</a></li>
+        <li><a href="https://lostmedia.wikidot.com/forum:recent-posts">LM最近发帖</a></li>
+      </ul>
+    </li>
+    <li><a href="/">主页</a></li>
+  </ul>
 </div>
 
             
@@ -91,28 +93,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <div class="side-block media" style="padding: 10px 0;">
-<div style="text-align: center;"><img src="./HW的代码测试页 - 失传媒体中文维基_files/cn-logo-whitebg.png" style="visibility: hidden;transform: scale(0);" alt="Logo" width="0" class="image"><a href="https://lostmediawiki.com/Home" target="_blank"><img src="./HW的代码测试页 - 失传媒体中文维基_files/LMW" alt="LMW" width="50px" class="image"></a><br>
-<a href="https://lostwaves-finest.fandom.com/wiki/Lostwave%27s_Finest_Wiki:Home" target="_blank"><img src="./HW的代码测试页 - 失传媒体中文维基_files/Fandom" alt="Fandom" width="50px" class="image"></a><br>
-<a href="https://lostmedia.wikidot.com/group" target="_blank"><img src="./HW的代码测试页 - 失传媒体中文维基_files/qq.png" alt="QQ" width="50px" class="image"></a></div>
 </div>
 <div style="clear:both; height: 0px; font-size: 1px"></div>
 <div class="side-block">
 <div class="heading">
-<p>站点导航</p>
+<p>导航</p>
 </div>
 <div class="menu-item icon home">
-<p><a href="https://lostmedia.wikidot.com/start">主页</a></p>
+<p><a href="/">主页</a></p>
 </div>
 <div class="menu-item icon join">
-<p><a href="https://lostmedia.wikidot.com/system:join">加入网站</a></p>
+<p><a href="https://lostmedia.wikidot.com/system:join">TODV</a></p>
 </div>
 <div class="menu-item icon search">
 <p><a href="https://lostmedia.wikidot.com/search:sites">聚合搜索</a> | <a href="https://lostmedia.wikidot.com/search:title">标题搜索</a></p>
 </div>
-
-
-<div class="menu-item"><a href="http://notifications.wikidot.com/notify:8108397/edit/true/title/H_W%20(8108397)">论坛回复提醒系统</a> | <a href="https://lostmedia.wikidot.com/notification-guide">使用教程</a></div>
-<div class="menu-item icon"><a href="https://lostmedia.wikidot.com/setting:8108397/edit/true/title/h-w%E7%9A%84%E8%AE%BE%E7%BD%AE%E9%A1%B5">个性网站设置</a></div>
 
 </div>
 <div class="side-block">
