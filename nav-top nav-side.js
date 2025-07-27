@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const navTopContent = `
 
 <div class="top-bar">
-//电脑端
 <ul>
 <li><a href="javascript:;">自己站导航
 </a><ul>
@@ -45,8 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </li>
 </ul>
 </div>
-
-//手机端
 
 <div class="mobile-top-bar">
 <div class="open-menu">
