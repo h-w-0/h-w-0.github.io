@@ -1,3 +1,4 @@
+@import url(https://github.backroomswiki.cn/Super_Liminal/css/basic-styles.css);
 @import url(https://github.backroomswiki.cn/Super_Liminal/css/super-liminal.css);
 
 /*根*/
@@ -67,3 +68,4 @@
 #toc .title,#toc #toc-action-bar{
     text-shadow: 0 0 10px rgb(var(--dark-color-3));
 }
+
