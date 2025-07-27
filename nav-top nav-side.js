@@ -75,9 +75,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     </ul>
                 </div>
             </div>
-
-            <div style="height: 150px;">
-            </div>
             <a href="###" class="close-menu">
             <image src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/black.png" style="z-index=-1; opacity: 0.3;">
             </a>
