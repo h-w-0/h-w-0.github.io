@@ -172,44 +172,6 @@ body {
 }
 
 
-/* 侧边栏 */
-#nav-side {
-    position: fixed;
-    top: var(--header-height);
-    left: calc(-1 * var(--sidebar-width));
-    bottom: 0;
-    width: var(--sidebar-width);
-    background-color: white;
-    border-right: 1px solid var(--border-color);
-    transition: all 0.3s ease;
-    z-index: 90;
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
-    transition: left 0.25s ease 0.125s;
-    max-height: 100vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    z-index: 9;
-    direction: rtl;
-    background: rgba(var(--sidebar-background-color));
-    scrollbar-width: thin;
-    border-right: solid 0.1333333333rem rgba(var(--sidebar-border-color));
-    box-sizing: border-box;
-}
-
-#nav-side.active {
-    left: 0;
-}
-
-@media (min-width: 1025px) {
-    #nav-side:hover {
-        left: 0;
-    }
-}
-
-.sidebar-content {
-    padding: 1.5rem;
-}
 
 .related-sites {
     margin: 2rem 0;
@@ -279,6 +241,43 @@ body {
 
 
 
+
+/* 侧边栏 */
+#nav-side {
+    position: fixed;
+    top: var(--header-height);
+    left: calc(-1 * var(--sidebar-width));
+    bottom: 0;
+    width: var(--sidebar-width);
+    background-color: white;
+    border-right: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    z-index: 90;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    transition: left 0.25s ease 0.125s;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 9;
+    scrollbar-width: thin;
+    border-right: solid 0.1333333333rem rgba(var(--sidebar-border-color));
+    box-sizing: border-box;
+    padding: 0px 1rem;
+}
+
+@media (min-width: 1025px) {
+    #nav-side:hover {
+        left: 0;
+    }
+}
+
+.sidebar-content {
+    padding: 1.5rem;
+}
+
+
+
 /*适配*/
 
 @media (max-width: 1024px) {
@@ -312,14 +311,14 @@ body {
     right: 0;
     display: block;
     height: 100vh;
-    width: 100%;
+    /width: 100%;
     transition: opacity 0.25s ease 0.125s, width 0.25s ease 0.125s;
     z-index: -1;
     pointer-events: none;
-    background: rgba(var(--popup-fader-color));
+    background: rgba(35, 35, 38, 0.65);
     opacity: 0;
     -webkit-backdrop-filter: blur(var(--general-blur));
-    backdrop-filter: blur(var(--general-blur));
+    backdrop-filter: blur(0.15rem);
 }
 
 @media only screen and (max-width: 1024px) {
