@@ -69,3 +69,20 @@
     text-shadow: 0 0 10px rgb(var(--dark-color-3));
 }
 
+/*魔改搜索*/
+
+#search-top-box-input {
+    display: block
+    margin-right: 5px;
+    color: rgba(var(--search-button-hover-text-color));
+    background: rgba(var(--search-button-hover-background-color));
+    border: 1px solid rgba(var(--search-button-hover-text-color));
+}
+
+form#search-top-box-form{
+    display: flex;
+}
+
+
+
+
