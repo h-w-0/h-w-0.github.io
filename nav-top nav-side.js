@@ -115,75 +115,31 @@ document.addEventListener('DOMContentLoaded', function() {
 <a class="close-menu" href="###"><br>
 <img src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/black.png" style="z-index=-1; opacity: 0.3;" alt="black.png" class="image"><br></a> 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div class="list-pages-box">    
-    
-    
-    
-    </div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div class="list-pages-box">    
-    
-    
-    
-    </div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div class="list-pages-box">    
-    
-    
-    
-    </div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div class="list-pages-box">    <div class="list-pages-item">
-
-
-
-
-</div>
-    
-    
-    
-    </div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-<div class="list-pages-box">    
-    
-    
-    
-    </div>
-
-<div style="clear:both; height: 0px; font-size: 1px"></div>
-
-
-
-                        
-
-
-
-
-
-
         `;
         navSide.innerHTML = navSideContent;
     }
 
+    // 版头
+    const navHeader = document.getElementById('header-contant');
+    if (navHeader) {
+        const HeaderContent = `
 
+    <div id="container-wrap">
+        <div id="container">
+            <div id="header">
+              <h1><a href="https://lostmedia.wikidot.com/"><span>失传媒体中文维基</span></a></h1>
+                
+                    <h2><span>Lost Media CN Wiki</span></h2>
+                
+                
+                <div id="search-top-box" class="form-search">
+    <form id="search-top-box-form" action="/" class="input-append">
+        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="" ><input class="button btn" type="submit" name="search" value="搜索">
+    </form>
 
+        `;
+        navHeader.innerHTML = HeaderContent;
+    }
     
 });
     
