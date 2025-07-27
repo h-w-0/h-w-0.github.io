@@ -3,8 +3,8 @@
 
 /*根*/
 :root {
-    --header-title: HW的私站" !important;
-    --header-subtitle: " " !important;
+    --header-title: "HW的私站";
+    --header-subtitle: "~~~";
     --logo-image: url("https://lostmedia.wikidot.com/local--files/start/cn-logo-2.svg") !important;
 
     /* Thread Colors */
