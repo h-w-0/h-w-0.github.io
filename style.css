@@ -176,25 +176,34 @@ body {
 #nav-side {
     position: fixed;
     top: var(--header-height);
-    left: 0;
+    left: calc(-1 * var(--sidebar-width));
     bottom: 0;
     width: var(--sidebar-width);
     background-color: white;
     border-right: 1px solid var(--border-color);
-    transform: translateX(calc(-100% + var(--sidebar-trigger-width)));
     transition: all 0.3s ease;
     z-index: 90;
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    transition: left 0.25s ease 0.125s;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 9;
+    direction: rtl;
+    background: rgba(var(--sidebar-background-color));
+    scrollbar-width: thin;
+    border-right: solid 0.1333333333rem rgba(var(--sidebar-border-color));
+    box-sizing: border-box;
 }
 
 #nav-side.active {
-    transform: translateX(0);
+    left: 0;
 }
 
 @media (min-width: 1025px) {
     #nav-side:hover {
-        transform: translateX(0);
+        left: 0;
     }
 }
 
@@ -295,27 +304,27 @@ body {
     color: var(--hover-link-color);
 }
 
+/*隐藏按钮怎么做啊*/
 
 #nav-side .close-menu {
-  position: fixed;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 85;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 1.5rem;
-  text-decoration: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 100vh;
+    width: 100%;
+    transition: opacity 0.25s ease 0.125s, width 0.25s ease 0.125s;
+    z-index: -1;
+    pointer-events: none;
+    background: rgba(var(--popup-fader-color));
+    opacity: 0;
+    -webkit-backdrop-filter: blur(var(--general-blur));
+    backdrop-filter: blur(var(--general-blur));
 }
 
 @media only screen and (max-width: 1024px) {
   #nav-side:target .close-menu {
-    opacity: 1;
-    pointer-events: auto;
-    left: var(--sidebar-width);
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-    left: min(var(--sidebar-width), calc(100% - 3rem));
+        opacity: 1;
+        pointer-events: auto;
+        width: calc(100% - min(var(--sidebar-width-on-mobile), 100% - 3rem));
   }
