@@ -321,7 +321,11 @@ div[id*=page-options-bottom] {
 /* -------------------------- */
 
 #license-area {
-    padding: 2.4rem 0 0.8rem;
+    padding: 0.4rem 0 0.8rem;
+}
+
+#footer .options::after{
+    content:""
 }
 
 /* -------------------------- */
