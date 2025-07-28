@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navTop = document.getElementById('top-bar');
     if (navTop) {
         const navTopContent = `
+
 <div class="top-bar">
   <ul>
     <li>
@@ -78,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <li><a href="/">主页</a></li>
   </ul>
 </div>
+
         `;
         navTop.innerHTML = navTopContent;
     }
@@ -86,10 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const navSide = document.getElementById('side-bar');
     if (navSide) {
         const navSideContent = `
+
 <div class="side-block media" style="padding: 10px 0;">
 </div>
 <div style="clear:both; height: 0px; font-size: 1px"></div>
 <div class="side-block">
+
 <div class="heading">
 <p>导航</p>
 </div>
@@ -99,13 +103,15 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="menu-item icon home">
 <p><a href="/search-tool">搜索工具</a></p>
 </div>
+
 <div class="image-container aligncenter"><img src="https://count.getloli.com/get/@h-w-0?theme=rule34" alt="累计访问" class="image"></div>
-</div>
+
+    </div>
 <div style="height: 150px;"></div>
 <br>
-<a class="close-menu" href="###">
-<img src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/black.png" style="z-index=-1; opacity: 0.3;" alt="关闭菜单" class="image"><br>
-</a>
+<a class="close-menu" href="###"><br>
+<img src="https://scp-wiki.wdfiles.com/local--files/nav%3Aside/black.png" style="z-index=-1; opacity: 0.3;" alt="black.png" class="image"><br></a> 
+
         `;
         navSide.innerHTML = navSideContent;
     }
@@ -114,20 +120,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const navHeader = document.getElementById('header-contant');
     if (navHeader) {
         const HeaderContent = `
+
               <h1><a href="https://lostmedia.wikidot.com/"><span>失传媒体中文维基</span></a></h1>
+                
                     <h2><span>Lost Media CN Wiki</span></h2>
+                
+                
                 <div id="search-top-box" class="form-search">
     <form id="search-top-box-form" action="/" class="input-append">
         <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" placeholder="搜索本站"><input class="button btn" type="submit" name="search" value="搜索">
     </form></div>
+
         `;
         navHeader.innerHTML = HeaderContent;
     }
     
-    // 搜索功能
+    // 搜索功能 - 移至DOMContentLoaded事件内部
     const searchForm = document.getElementById('search-top-box-form');
     const searchInput = document.getElementById('search-top-box-input');
-    if (searchForm && searchInput) {
+    if (searchForm && searchInput) { // 添加存在性检查
         searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const searchText = searchInput.value.trim();
@@ -135,24 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const targetUrl = `https://search.ipv6s.net/search?q=${encodeURIComponent(searchText)}%20!yh%20!go&categories=general&language=all`;
                 window.location.href = targetUrl;
             } else {
-                alert('请输入搜索内容');
+                alert('输入内容？');
             }
-        });
-    }
-
-    const openMenu = document.querySelector('.open-menu a');
-    const closeMenu = document.querySelector('.close-menu');
-    const sideBar = document.getElementById('side-bar');
-    
-    if (openMenu && closeMenu && sideBar) {
-        openMenu.addEventListener('click', function(e) {
-            e.preventDefault();
-            sideBar.style.display = 'block';
-        });
-        
-        closeMenu.addEventListener('click', function(e) {
-            e.preventDefault();
-            sideBar.style.display = 'none';
         });
     }
 });
