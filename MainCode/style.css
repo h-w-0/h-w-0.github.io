@@ -5,7 +5,7 @@
 :root {
     --header-title: "HW的私站";
     --header-subtitle: "毙掉了~~";
-    --logo-image: url("/img/毙掉了.png");
+    --logo-image: url("https://hw233.vip/img/毙掉了.png")
 
     /* Thread Colors */
     --thread-accent-color: var(--background-color);
@@ -71,6 +71,8 @@
 
 /*魔改搜索*/
 
+@media only screen and (min-width: 1024px){
+
 #search-top-box-input {
     display: block;
     margin-right: 5px;
@@ -83,6 +85,6 @@ form#search-top-box-form{
     display: flex;
 }
 
-
+}
 
 
