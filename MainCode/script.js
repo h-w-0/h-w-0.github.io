@@ -1,4 +1,48 @@
 document.addEventListener('DOMContentLoaded', function() {
+    //简化结构
+
+    const pageStart = document.querySelector('page-start');
+    const pageContent = pageStart.innerHTML;
+    const fullStructure = `
+    <div id="skrollr-body">
+        <a name="page-top"></a>
+        <div id="container-wrap-wrap">
+            <div id="container-wrap">
+                <div id="container">
+                    <div id="header">
+                        <div id="header-contant"></div>
+                        <div id="top-bar"></div>
+                    </div>
+                
+                    <div id="content-wrap">
+                        <div id="side-bar"></div>
+                        <div id="main-content">
+                            <div id="action-area-top"></div>
+                            ${pageContent}
+                            <div id="page-info-break"></div>    
+                            <div id="action-area" style="display: none;"></div>
+                        </div>
+                    </div>
+
+                    <!-- 页脚部分 -->
+                    <div id="footer" style="display: block; visibility: visible;">
+                        <div class="options" style="display: block; visibility: visible;">
+                            占位
+                        </div>
+                    </div>
+
+                    <div id="license-area" class="license-area">
+                        版权大抵属于H_W，另外叶芷版式真好看
+                    </div>
+                </div>
+                <div id="extra-div-1"><span></span></div>      
+            </div>
+        </div>
+    </div>
+    `;
+    document.body.innerHTML = fullStructure;
+
+    
     // 顶栏
     const navTop = document.getElementById('top-bar');
     if (navTop) {
