@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
 });
 
+});
+
 //搜索功能
 const searchForm = document.getElementById('search-top-box-form');
 const searchInput = document.getElementById('search-top-box-input');
@@ -153,4 +155,3 @@ searchForm.addEventListener('submit', function(e) {
     } else {
         alert('输入内容？');
     }
-});
