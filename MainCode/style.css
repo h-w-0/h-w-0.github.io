@@ -8,6 +8,13 @@
     --header-title: "HW的私站";
     --header-subtitle: "毙掉了~~";
     --logo-image: url("https://hw233.vip/img/毙掉了.png");
+    --blue: 230, 100, 50;
+    --blue-d: 180, 60, 30;
+    --gray: 255, 240, 230;
+    --gray-d: 220, 180, 160;
+    --white: 255, 250, 245;
+    --black: 40, 30, 25;  
+    --beta-color: var(--white);
 }
 
 #header h2 span::before {
