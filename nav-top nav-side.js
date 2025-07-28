@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <div id="search-top-box" class="form-search">
     <form id="search-top-box-form" action="/" class="input-append">
-        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="" ><input class="button btn" type="submit" name="search" value="搜索">
+        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" placeholder="搜索本站"><input class="button btn" type="submit" name="search" value="搜索">
     </form></div>
 
         `;
@@ -140,4 +140,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
 });
-    
+
+//搜索功能
+const searchForm = document.getElementById('search-top-box-form');
+const searchInput = document.getElementById('search-top-box-input');
+searchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchText = searchInput.value.trim();
+    if (searchText) {
+        const targetUrl = `https://search.ipv6s.net/search?q=${encodeURIComponent(searchText)}%20!yh%20!go&categories=general&language=all`;
+        window.location.href = targetUrl;
+    } else {
+        alert('输入内容？');
+    }
+});
