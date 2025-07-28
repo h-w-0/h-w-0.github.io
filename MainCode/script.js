@@ -55,16 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <ul>
         <li>
           <a href="https://lostmedia.wikidot.com/">失传媒体中文维基</a>
-          <ul>
-            <li><a href="https://lostmedia.wikidot.com/forum:recent-posts">最近发帖</a></li>
-          </ul>
         </li>
+        <li><a href="https://lostmedia.wikidot.com/forum:recent-posts">最近发帖</a></li>
         <li>
           <a href="https://backrooms-to-dv.wikidot.com/">后室TODV</a>
-          <ul>
-            <li><a href="https://backrooms-to-dv.wikidot.com/forum:recent-posts">最近发帖</a></li>
-          </ul>
         </li>
+        <li><a href="https://backrooms-to-dv.wikidot.com/forum:recent-posts">最近发帖</a></li>
         <li><a href="https://backrooms-arch-cn.wikidot.com/">后室被删除页面记录</a></li>
         <li><a href="https://h-w-0.wikidot.com/">荒废的私站</a></li>
         <li><a href="https://lostmedia.cn/">失传媒体CN域名</a></li>
@@ -75,16 +71,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <ul>
         <li>
           <a href="https://backrooms-wiki-cn.wikidot.com/">后室中文</a>
-          <ul>
-            <li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
-          </ul>
         </li>
+                    <li><a href="https://backrooms-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
         <li>
           <a href="https://scp-wiki-cn.wikidot.com/">SCP基金会</a>
-          <ul>
-            <li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
-          </ul>
         </li>
+                    <li><a href="https://scp-wiki-cn.wikidot.com/forum:recent-posts">最近发帖</a></li>
         <li><a href="https://brsandbox-pro.wikidot.com/">后室沙盒Pro</a></li>
         <li><a href="https://brsandbox-mini.wikidot.com/">后室沙盒Mini</a></li>
       </ul>
