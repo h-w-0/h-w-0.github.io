@@ -151,6 +151,7 @@ body {
     background-image: var(--desktop-background);
     background-size: cover;
     background-position: center;
+    z-index: -1;
 }
 
 #main-content {
