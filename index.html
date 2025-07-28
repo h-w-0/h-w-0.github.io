@@ -6,6 +6,69 @@
     <title>HW的私站</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/MainCode/style.css">
+    <style>
+      .site-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .site-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgba(var(--gray), 0.9);
+      border: 2px solid rgba(var(--blue), 0.7);
+      border-radius: 12px;
+      padding: 20px;
+      text-decoration: none;
+      color: rgba(var(--black), 1);
+      transition: all 0.35s ease;
+      cursor: pointer;
+      height: 100%; /* 确保卡片高度一致 */
+    }
+
+    .site-card:hover {
+      background-color: rgba(var(--gray-d), 0.95);
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 15px rgba(var(--blue-d), 0.3);
+    }
+
+    .site-card img {
+      max-width: 120px;
+      height: auto;
+      margin-bottom: 15px;
+      object-fit: contain;
+    }
+
+    .site-card p {
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .site-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .site-card img {
+        max-width: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .site-grid {
+        gap: 15px;
+      }
+
+      .site-card {
+        padding: 15px;
+      }
+    }    
+    </style>
 </head>
 <body id="html-body">
     
@@ -20,7 +83,18 @@
         <div class="meta-title">
             我的一些站
         </div>
-            
+
+              <div class="site-grid">
+
+    <a href="https://lostmedia.wikidot.com" class="site-card">
+      <img src="https://lostmedia.wikidot.com/local--files/start/cn-logo-2.svg" alt="失传媒体中文维基">
+      <p>失传媒体中文维基</p>
+    </a>
+                      <a href="https://backrooms-to-dv.wikidot.com/" class="site-card">
+      <img src="http://backrooms-to-dv.wikidot.com/local--files/start/logo" alt="后室TODV">
+      <p>后室TODV</p>
+    </a>
+                    </div>
             
         </div>
     </page-start>
