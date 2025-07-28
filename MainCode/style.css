@@ -4,8 +4,8 @@
 /*根*/
 :root {
     --header-title: "HW的私站";
-    --header-subtitle: "~~~";
-    --logo-image: url("https://lostmedia.wikidot.com/local--files/start/cn-logo-2.svg") !important;
+    --header-subtitle: "毙掉了~~";
+    --logo-image: url("/img/毙掉了.png");
 
     /* Thread Colors */
     --thread-accent-color: var(--background-color);
