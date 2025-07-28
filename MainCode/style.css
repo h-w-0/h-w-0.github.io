@@ -1,72 +1,13 @@
 @import url(https://github.backroomswiki.cn/Super_Liminal/css/basic-styles.css);
 @import url(https://github.backroomswiki.cn/Super_Liminal/css/super-liminal.css);
+@import url(/MainCode/morning-star.css);
+
 
 /*根*/
 :root {
     --header-title: "HW的私站";
     --header-subtitle: "毙掉了~~";
     --logo-image: url("https://hw233.vip/img/毙掉了.png");
-
-    /* Thread Colors */
-    --thread-accent-color: var(--background-color);
-    --dark-accent: var(--dark-color-2);
-
-    --bb-white:var(--background-color);
-    --bb-black:var(--text-color);
-
-    --link-color: 100, 100, 200;
-    --hover-link-color: 61, 172, 214;
-    --visited-link-color: 130, 130, 230;
-    --newpage-color: 50, 50, 220;
-
-    --text-color: 35, 35, 38;
-    --background-color: 252, 252, 252;
-    --light-color-2: 240, 240, 244;
-    --dark-color-2: 229, 229, 238;
-    --dark-color-3: 50, 50, 51;
-    --dark-color-4: var(--dark-color-3);
-    --general-light-background-color: var(--light-color-2);
-    --general-light-text-color: var(--text-color);
-    --general-medium-background-color: var(--dark-color-2);
-    --general-medium-text-color: var(--text-color);
-    --general-dark-background-color: var(--dark-color-3);
-    --general-dark-text-color: var(--light-color-1);
-    --header-background-bottom: var(--light-color-2);
-    --header-background-top: var(--light-color-2), 0.8;
-    --header-extra-background-image: none;
-    --header-text-color: var(--dark-color-3);
-    --header-text-shadow-color: 0, 0, 0, 0;
-    --topbar-text-color: var(--dark-color-3);
-    --topbar-hover-text-color: var(--light-color-2);
-    --header-username-color: var(--dark-color-3);
-    --account-button-text-color: var(--light-color-2);
-    --account-button-hover-text-color: var(--text-color);
-    --account-button-background-color: var(--dark-color-3);
-    --account-drop-hover-background-color: var(--light-color-1);
-    --page-title-border-color: var(--dark-color-2);
-    --sidebar-title-background-color: var(--dark-color-2);
-    --sidebar-title-text-color: var(--dark-color-3);
-    --sidebar-title-shadow-color: 0, 0, 0, 0;
-    --sidebar-media-background-color: var(--light-color-2);
-    --sidebar-hover-background-color: var(--light-color-2);
-    --hr-color: var(--dark-color-2);
-    --popup-loading-color: var(--dark-color-3);
-    --scrollbar-color: var(--dark-color-3);
-    --scrollbar-background-color: var(--light-color-2);
-    --page-option-background-color: var(--light-color-2);
-
-}
-#header {
-    box-shadow:
-        0px 0px 8.5px -1px rgba(var(--general-shadow-color), 0.42),
-        0px 0px 68px -21px rgba(var(--general-shadow-color), 0.1)
-}
-#header h2 span::before {
-    opacity: 0.1;
-}
-
-#toc .title,#toc #toc-action-bar{
-    text-shadow: 0 0 10px rgb(var(--dark-color-3));
 }
 
 /*魔改搜索*/
