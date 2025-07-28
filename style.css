@@ -72,7 +72,7 @@
 /*魔改搜索*/
 
 #search-top-box-input {
-    display: block
+    display: block;
     margin-right: 5px;
     color: rgba(var(--search-button-hover-text-color));
     background: rgba(var(--search-button-hover-background-color));
