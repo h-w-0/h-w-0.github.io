@@ -10,6 +10,13 @@
     --logo-image: url("https://hw233.vip/img/毙掉了.png");
 }
 
+#header h2 span::before {
+    opacity: 1;
+    background-position: center left;
+    width: 13rem;
+    transform: skew(10deg, 10deg);
+}
+
 /*魔改搜索*/
 
 @media only screen and (min-width: 1024px){
