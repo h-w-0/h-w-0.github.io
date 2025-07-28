@@ -17,11 +17,23 @@
     --beta-color: var(--white);
 }
 
+@keyframes skewAnimation {
+  0% {
+    transform: skew(10deg, 10deg);
+  }
+  50% {
+    transform: skew(-10deg, -10deg);
+  }
+  100% {
+    transform: skew(10deg, 10deg);
+  }
+}
+
 #header h2 span::before {
     opacity: 1;
     background-position: center left;
     width: 13rem;
-    transform: skew(10deg, 10deg);
+    animation: skewAnimation 1s ease-in-out infinite;
 }
 
 /*魔改搜索*/
