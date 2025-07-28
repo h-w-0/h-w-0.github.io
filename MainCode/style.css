@@ -5,7 +5,7 @@
 :root {
     --header-title: "HW的私站";
     --header-subtitle: "毙掉了~~";
-    --logo-image: url("https://hw233.vip/img/毙掉了.png")
+    --logo-image: url("https://hw233.vip/img/毙掉了.png");
 
     /* Thread Colors */
     --thread-accent-color: var(--background-color);
