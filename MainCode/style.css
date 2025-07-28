@@ -54,4 +54,13 @@ form#search-top-box-form{
 
 }
 
+/*meta标题*/
+
+#page-title, .meta-title {
+transition: all ease-out 0.5s;
+}
+
+#page-title:hover , .meta-title:hover {
+    transform: translateX(10px);
+}
 
