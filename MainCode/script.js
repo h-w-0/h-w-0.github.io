@@ -121,9 +121,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navHeader) {
         const HeaderContent = `
 
-              <h1><a href="https://lostmedia.wikidot.com/"><span>失传媒体中文维基</span></a></h1>
+              <h1><a href="https://hw233.vip/"><span>HW私站</span></a></h1>
                 
-                    <h2><span>Lost Media CN Wiki</span></h2>
+                    <h2><span>毙掉了~~~</span></h2>
                 
                 
                 <div id="search-top-box" class="form-search">
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navHeader.innerHTML = HeaderContent;
     }
     
-    // 搜索功能 - 移至DOMContentLoaded事件内部
+    // 搜索功能
     const searchForm = document.getElementById('search-top-box-form');
     const searchInput = document.getElementById('search-top-box-input');
     if (searchForm && searchInput) { // 添加存在性检查
