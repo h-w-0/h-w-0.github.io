@@ -6,6 +6,7 @@ const article = `
 + 我的一些站
 
 [[div class="site-grid"]]
+[[div class="site-card"]]
 [[a href="https://lostmedia.wikidot.com" class="site-card"]]
 [[image src="https://lostmedia.wikidot.com/local--files/start/cn-logo-2.svg" alt="失传媒体中文维基"]]
 失传媒体中文维基
@@ -13,18 +14,19 @@ const article = `
 [[/div]]
 
 
-[[div class="site-grid"]]
+[[div class="site-card"]]
 [[a href="https://backrooms-to-dv.wikidot.com/" class="site-card"]]
 [[image src="http://backrooms-to-dv.wikidot.com/local--files/start/logo" alt="后室TODV"]]
 后室TODV
 [[/a]]
 [[/div]]
 
-[[div class="site-grid"]]
+[[div class="site-card"]]
 [[a href="https://backrooms-arch-cn.wikidot.com/" class="site-card"]]
 [[image src="https://backrooms-arch-cn.wikidot.com/local--files/start/ArchCnLogo.svg" alt="后室中文死文备份"]]
 后室中文死文备份
 [[/a]]
+[[/div]]
 [[/div]]
 
 + 最近的一些玩意
