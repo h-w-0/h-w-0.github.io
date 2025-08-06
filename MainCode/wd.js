@@ -21,6 +21,16 @@ const article = `
     </a>
                     </div>
 
+                    + 最近的一些玩意
+
+都是些自用的玩意
+                  //想念Listpages//
+[[[search-tool|自用搜索工具]]]
+[[[crom-search|Crom搜索工具]]]
+[[[ddscq|迭代生成器]]]
+[[[srt-to-article|SRT字幕转文章]]]
+                  
+
 `;
 
 // 转换函数
