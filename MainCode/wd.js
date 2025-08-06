@@ -10,6 +10,7 @@ const article = `
 [[image src="https://lostmedia.wikidot.com/local--files/start/cn-logo-2.svg" alt="失传媒体中文维基"]]
 失传媒体中文维基
 [[/a]]
+[[/div]]
 
 
 [[div class="site-grid"]]
@@ -17,7 +18,7 @@ const article = `
 [[image src="http://backrooms-to-dv.wikidot.com/local--files/start/logo" alt="后室TODV"]]
 后室TODV
 [[/a]]
-
+[[/div]]
 
 [[div class="site-grid"]]
 [[a href="https://backrooms-arch-cn.wikidot.com/" class="site-card"]]
@@ -26,10 +27,9 @@ const article = `
 [[/a]]
 [[/div]]
 
-                    + 最近的一些玩意
++ 最近的一些玩意
 
-都是些自用的玩意
-                  //想念Listpages//
+都是些自用的玩意//（想念Listpages）//
 [[[search-tool|自用搜索工具]]]
 [[[crom-search|Crom搜索工具]]]
 [[[ddscq|迭代生成器]]]
