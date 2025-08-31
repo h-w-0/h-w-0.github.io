@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后室维基查询工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        dark: '#1D2129',
+                        light: '#F2F3F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            }
+            .input-focus {
+                @apply focus:ring-2 focus:ring-primary/50 focus:border-primary;
+            }
+            .btn-hover {
+                @apply hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 页面标题 -->
+        <header class="text-center mb-10">
+            <h1 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-dark mb-2">后室维基查询工具</h1>
+            <p class="text-gray-600">查询用户、文章和排名数据</p>
+        </header>
+
+        <!-- 站点选择 -->
+        <div class="mb-6">
+            <label for="branch" class="block text-sm font-medium text-gray-700 mb-1">选择站点：</label>
+            <select id="branch" class="w-full px-4 py-2 border border-gray-300 rounded-lg input-focus bg-white">
+                <!-- 由JS动态填充 -->
+            </select>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- 用户查询区域 -->
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fa fa-user-circle text-primary mr-2"></i>用户查询
+                </h2>
+                <p class="text-sm text-gray-500 mb-4">输入用户名或#排名（例如#10）查询用户信息</p>
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="userQuery" 
+                        placeholder="用户名或#排名" 
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                    >
+                    <button 
+                        id="searchUserBtn" 
+                        class="bg-primary text-white px-4 py-2 rounded-lg btn-hover"
+                    >
+                        <i class="fa fa-search mr-1"></i>查询
+                    </button>
+                </div>
+                <div id="userResult" class="mt-4 min-h-[120px] p-4 rounded-lg bg-light">
+                    <div class="text-gray-500 italic">请输入查询内容并点击查询按钮</div>
+                </div>
+            </div>
+
+            <!-- 文章查询区域 -->
+            <div class="bg-white rounded-xl p-6 card-shadow">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fa fa-file-text-o text-primary mr-2"></i>文章查询
+                </h2>
+                <p class="text-sm text-gray-500 mb-4">输入标题关键词查询文章信息</p>
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="titleQuery" 
+                        placeholder="文章标题关键词" 
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg input-focus"
+                    >
+                    <button 
+                        id="searchTitleBtn" 
+                        class="bg-primary text-white px-4 py-2 rounded-lg btn-hover"
+                    >
+                        <i class="fa fa-search mr-1"></i>查询
+                    </button>
+                </div>
+                <div id="titleResult" class="mt-4 min-h-[120px] p-4 rounded-lg bg-light">
+                    <div class="text-gray-500 italic">请输入查询内容并点击查询按钮</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="bg-white rounded-xl p-6 card-shadow mb-8">
+            <h3 class="text-lg font-semibold mb-3 flex items-center">
+                <i class="fa fa-info-circle text-secondary mr-2"></i>使用说明
+            </h3>
+            <ul class="text-gray-700 space-y-2 text-sm">
+                <li><i class="fa fa-check-circle text-green-500 mr-1"></i>用户查询支持两种方式：输入用户名或使用#加排名（例如#5查询排名第5的用户）</li>
+                <li><i class="fa fa-check-circle text-green-500 mr-1"></i>文章查询支持标题关键词搜索，会返回最匹配的结果</li>
+                <li><i class="fa fa-check-circle text-green-500 mr-1"></i>可以通过上方下拉框切换不同语言版本的后室维基站点</li>
+                <li><i class="fa fa-exclamation-circle text-yellow-500 mr-1"></i>查询结果可能会有延迟，请耐心等待加载完成</li>
+            </ul>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="text-center text-gray-500 text-sm">
+            <p>后室维基查询工具 &copy; 2023</p>
+        </footer>
+    </div>
+
+    <script>
+        // 支持的站点列表（移除所有SCP相关站点）
+        const branchInfo = {
+            "cn": { url: "http://backrooms-wiki-cn.wikidot.com" },
+            "en": { url: "http://backrooms-wiki.wikidot.com" },
+            "es": { url: "http://es-backrooms-wiki.wikidot.com" },
+            "fr": { url: "http://fr-backrooms-wiki.wikidot.com" },
+            "id": { url: "http://id-backrooms-wiki.wikidot.com" },
+            "jp": { url: "http://japan-backrooms-wiki.wikidot.com" },
+            "pl": { url: "http://pl-backrooms-wiki.wikidot.com" },
+            "ptbr": { url: "http://pt-br-backrooms-wiki.wikidot.com" },
+            "ru": { url: "http://ru-backrooms-wiki.wikidot.com" },
+            "vn": { url: "http://backrooms-vn.wikidot.com" },
+            "na": { url: "http://nationarea.wikidot.com" },
+            "all": { url: "" }
+        };
+
+        // API端点列表
+        const apiList = ["https://api.crom.avn.sh/graphql", "https://zh.xjo.ch/crom/graphql"];
+
+        // GraphQL查询模板
+        const queries = {
+            // 文章查询
+            titleQuery: `
+                query titleQuery($query: String!, $anyBaseUrl: [String!]) {
+                    searchPages(query: $query, filter: { anyBaseUrl: $anyBaseUrl }) {
+                        url
+                        wikidotInfo {
+                            title
+                            rating
+                            voteCount
+                            createdAt
+                            tags
+                        }
+                        alternateTitles {
+                            title
+                        }
+                        translationOf {
+                            url
+                            attributions {
+                                user {
+                                    name
+                                }
+                            }
+                        }
+                        attributions {
+                            user {
+                                name
+                            }
+                        }
+                    }
+                }
+            `,
+            
+            // 用户查询
+            userQuery: `
+                query userQuery($query: String!, $anyBaseUrl: [String!], $baseUrl: String!) {
+                    searchUsers(query: $query, filter: { anyBaseUrl: $anyBaseUrl }) {
+                        name
+                        wikidotInfo {
+                            displayName
+                            wikidotId
+                            unixName
+                        }
+                        authorInfos {
+                            site
+                            authorPage {
+                                translationOf {
+                                    url
+                                }
+                                url
+                            }
+                        }
+                        statistics(baseUrl: $baseUrl) {
+                            rank
+                            totalRating
+                            pageCount
+                        }
+                    }
+                }
+            `,
+            
+            // 排名查询
+            userRankQuery: `
+                query userRankQuery($rank: Int!, $anyBaseUrl: [String!], $baseUrl: String!) {
+                    usersByRank(rank: $rank, filter: { anyBaseUrl: $anyBaseUrl }) {
+                        name
+                        wikidotInfo {
+                            displayName
+                            wikidotId
+                            unixName
+                        }
+                        authorInfos {
+                            site
+                            authorPage {
+                                translationOf {
+                                    url
+                                }
+                                url
+                            }
+                        }
+                        statistics(baseUrl: $baseUrl) {
+                            rank
+                            totalRating
+                            pageCount
+                        }
+                    }
+                }
+            `
+        };
+
+        // 初始化页面元素
+        function initPage() {
+            console.log('页面初始化开始');
+            
+            // 填充站点选择下拉框
+            const branchSelect = document.getElementById('branch');
+            if (branchSelect) {
+                Object.entries(branchInfo).forEach(([key, { url }]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = `${key} (${url || '所有站点'})`;
+                    if (key === 'cn') option.selected = true; // 默认中文站
+                    branchSelect.appendChild(option);
+                });
+                console.log('站点选择下拉框初始化完成');
+            } else {
+                console.warn('未找到ID为"branch"的元素');
+            }
+
+            // 绑定查询按钮事件
+            const userBtn = document.getElementById('searchUserBtn');
+            if (userBtn) {
+                userBtn.addEventListener('click', () => {
+                    const query = document.getElementById('userQuery')?.value.trim();
+                    const branch = document.getElementById('branch')?.value;
+                    if (query) {
+                        console.log(`用户查询: ${query}, 站点: ${branch}`);
+                        searchUser(query, branch);
+                    } else {
+                        showUserError('请输入查询内容');
+                    }
+                });
+                console.log('用户查询按钮事件绑定完成');
+            } else {
+                console.warn('未找到ID为"searchUserBtn"的元素');
+            }
+
+            const titleBtn = document.getElementById('searchTitleBtn');
+            if (titleBtn) {
+                titleBtn.addEventListener('click', () => {
+                    const query = document.getElementById('titleQuery')?.value.trim();
+                    const branch = document.getElementById('branch')?.value;
+                    if (query) {
+                        console.log(`文章查询: ${query}, 站点: ${branch}`);
+                        searchTitle(query, branch);
+                    } else {
+                        showTitleError('请输入查询内容');
+                    }
+                });
+                console.log('文章查询按钮事件绑定完成');
+            } else {
+                console.warn('未找到ID为"searchTitleBtn"的元素');
+            }
+            
+            console.log('页面初始化完成');
+        }
+
+        // API请求函数
+        async function cromApiRequest(query, branch, queryType) {
+            const baseUrl = branchInfo[branch]?.url;
+            const queryString = queryType === 'user' ? queries.userQuery : 
+                            queryType === 'rank' ? queries.userRankQuery : queries.titleQuery;
+            let endpointIndex = 0;
+
+            console.log(`开始API请求: 类型=${queryType}, 分支=${branch}, 端点总数=${apiList.length}`);
+            
+            async function request() {
+                if (endpointIndex >= apiList.length) {
+                    const error = new Error('所有API端点均请求失败');
+                    console.error(error.message);
+                    throw error;
+                }
+
+                try {
+                    const currentEndpoint = apiList[endpointIndex];
+                    console.log(`尝试API端点 (${endpointIndex + 1}/${apiList.length}): ${currentEndpoint}`);
+                    
+                    // 更新加载状态显示
+                    updateLoadingStatus(queryType, `正在连接到服务器 (${endpointIndex + 1}/${apiList.length})`);
+                    
+                    const response = await fetch(currentEndpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            query: queryString,
+                            variables: {
+                                query,
+                                anyBaseUrl: baseUrl !== "" ? [baseUrl] : null,
+                                baseUrl,
+                                rank: queryType === 'rank' ? parseInt(query.replace(/#/, '')) : 0
+                            }
+                        }),
+                        timeout: 15000 // 15秒超时
+                    });
+
+                    console.log(`API响应状态: ${response.status} ${response.statusText}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP错误: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    updateLoadingStatus(queryType, '正在解析数据...');
+                    const { data, errors } = await response.json();
+                    
+                    if (errors && errors.length) {
+                        console.error('GraphQL错误:', errors);
+                        throw new Error(`查询错误: ${errors[0].message}`);
+                    }
+                    
+                    console.log('API请求成功，返回数据:', data);
+                    return data;
+                } catch (error) {
+                    console.error(`API端点 ${apiList[endpointIndex]} 错误:`, error.message);
+                    endpointIndex++;
+                    return request();
+                }
+            }
+
+            return request();
+        }
+
+        // 查询用户
+        async function searchUser(query, branch) {
+            const resultDiv = document.getElementById('userResult');
+            if (!resultDiv) {
+                console.warn('未找到ID为"userResult"的元素');
+                return;
+            }
+            
+            updateLoadingStatus('user', '准备查询用户...');
+            
+            try {
+                const isRankQuery = /^#[0-9]+$/.test(query);
+                console.log(`用户查询类型: ${isRankQuery ? '排名查询' : '用户名查询'}`);
+                
+                const data = await cromApiRequest(query, branch, isRankQuery ? 'rank' : 'user');
+                const users = isRankQuery ? data.usersByRank : data.searchUsers;
+
+                if (!users || users.length === 0) {
+                    resultDiv.innerHTML = '<div class="no-result text-gray-600"><i class="fa fa-search-minus mr-1"></i>未找到用户</div>';
+                    console.log('未找到用户数据');
+                    return;
+                }
+
+                const user = users[0];
+                const stats = user.statistics;
+                const avgRating = stats.pageCount > 0 ? (stats.totalRating / stats.pageCount).toFixed(2) : '0.00';
+                
+                resultDiv.innerHTML = `
+                    <div class="border-b pb-2 mb-2">
+                        <h3 class="text-lg font-semibold text-primary">${user.name} <span class="text-sm bg-gray-200 px-2 py-0.5 rounded">#${stats.rank}</span></h3>
+                        ${user.wikidotInfo?.displayName && user.wikidotInfo.displayName !== user.name ? 
+                            `<p class="text-sm text-gray-600">显示名: ${user.wikidotInfo.displayName}</p>` : ''}
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                        <div class="bg-gray-50 p-2 rounded">
+                            <span class="text-gray-600">总分:</span>
+                            <span class="font-medium">${stats.totalRating}</span>
+                        </div>
+                        <div class="bg-gray-50 p-2 rounded">
+                            <span class="text-gray-600">页面数:</span>
+                            <span class="font-medium">${stats.pageCount}</span>
+                        </div>
+                        <div class="bg-gray-50 p-2 rounded col-span-2">
+                            <span class="text-gray-600">平均分:</span>
+                            <span class="font-medium">${avgRating}</span>
+                        </div>
+                    </div>
+                    ${user.authorInfos?.[0]?.authorPage?.url ? 
+                        `<div class="mt-3 text-sm">
+                            <a href="${user.authorInfos[0].authorPage.url}" target="_blank" class="text-primary hover:underline flex items-center">
+                                <i class="fa fa-external-link mr-1"></i>查看作者页
+                            </a>
+                        </div>` : ''}
+                `;
+            } catch (error) {
+                console.error('用户查询失败:', error);
+                showUserError(`查询失败: ${error.message}`);
+            }
+        }
+
+        // 查询文章
+        async function searchTitle(query, branch) {
+            const resultDiv = document.getElementById('titleResult');
+            if (!resultDiv) {
+                console.warn('未找到ID为"titleResult"的元素');
+                return;
+            }
+            
+            updateLoadingStatus('title', '准备查询文章...');
+            
+            try {
+                const data = await cromApiRequest(query, branch, 'title');
+                const articles = data.searchPages;
+
+                if (!articles || articles.length === 0) {
+                    resultDiv.innerHTML = '<div class="no-result text-gray-600"><i class="fa fa-search-minus mr-1"></i>未找到文章</div>';
+                    console.log('未找到文章数据');
+                    return;
+                }
+
+                const article = articles[0];
+                const { rating, voteCount, createdAt, tags } = article.wikidotInfo;
+                const positiveVotes = Math.round((voteCount + rating) / 2);
+                const negativeVotes = Math.round((voteCount - rating) / 2);
+                const authors = article.attributions.map(attr => attr.user.name).join('、');
+                
+                // 格式化日期
+                const date = createdAt ? new Date(createdAt).toLocaleDateString() : '未知';
+                
+                resultDiv.innerHTML = `
+                    <div class="border-b pb-2 mb-2">
+                        <h3 class="text-lg font-semibold text-primary">${article.wikidotInfo.title}</h3>
+                        <div class="flex flex-wrap gap-1 mt-1">
+                            ${tags?.map(tag => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-0.5 rounded">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-sm">
+                        <div>
+                            <span class="text-gray-600">评分:</span>
+                            <span class="font-medium ${rating > 0 ? 'text-green-600' : rating < 0 ? 'text-red-600' : 'text-gray-600'}">
+                                ${rating} 
+                                <span class="text-gray-500">
+                                    (+${positiveVotes}, -${negativeVotes})
+                                </span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">作者:</span>
+                            <span class="font-medium">${authors || '未知'}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">创建日期:</span>
+                            <span class="font-medium">${date}</span>
+                        </div>
+                        ${article.translationOf ? `
+                            <div>
+                                <span class="text-gray-600">翻译自:</span>
+                                <a href="${article.translationOf.url}" target="_blank" class="text-primary hover:underline">
+                                    原文链接
+                                </a>
+                            </div>
+                        ` : ''}
+                        <div class="mt-3 pt-2 border-t">
+                            <a href="${article.url}" target="_blank" class="inline-flex items-center bg-primary/10 text-primary px-3 py-1 rounded hover:bg-primary/20 transition-colors">
+                                <i class="fa fa-external-link mr-1"></i>查看完整文章
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('文章查询失败:', error);
+                showTitleError(`查询失败: ${error.message}`);
+            }
+        }
+
+        // 更新加载状态显示
+        function updateLoadingStatus(type, message) {
+            const resultDiv = type === 'user' ? 
+                document.getElementById('userResult') : 
+                document.getElementById('titleResult');
+            
+            if (resultDiv) {
+                resultDiv.innerHTML = `<div class="loading flex items-center text-gray-600">
+                    <i class="fa fa-circle-o-notch fa-spin mr-2"></i> ${message}
+                </div>`;
+            }
+        }
+
+        // 显示用户查询错误
+        function showUserError(message) {
+            const resultDiv = document.getElementById('userResult');
+            if (resultDiv) {
+                resultDiv.innerHTML = `<div class="error text-red-600 bg-red-50 p-3 rounded-lg">
+                    <i class="fa fa-exclamation-triangle mr-2"></i> ${message}
+                </div>`;
+            }
+        }
+
+        // 显示文章查询错误
+        function showTitleError(message) {
+            const resultDiv = document.getElementById('titleResult');
+            if (resultDiv) {
+                resultDiv.innerHTML = `<div class="error text-red-600 bg-red-50 p-3 rounded-lg">
+                    <i class="fa fa-exclamation-triangle mr-2"></i> ${message}
+                </div>`;
+            }
+        }
+
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM加载完成，开始初始化');
+            initPage();
+        });
+    </script>
+</body>
+</html>
