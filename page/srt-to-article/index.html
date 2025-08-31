@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW的私站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://hw233.vip/MainCode/style.css">
+    <style>
+.srt-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.srt-intro {
+    margin-bottom: 20px;
+    color: rgb(var(--black));
+    line-height: 1.6;
+}
+
+.srt-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: rgb(var(--black));
+}
+
+.srt-textarea {
+    width: 100%;
+    min-height: 250px;
+    padding: 12px;
+    border: 1px solid rgb(var(--gray-d));
+    border-radius: 6px;
+    background-color: rgb(var(--white));
+    color: rgb(var(--black));
+    font-family: inherit;
+    font-size: 16px;
+    resize: vertical;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.srt-textarea:focus {
+    outline: none;
+    border-color: rgb(var(--blue));
+    box-shadow: 0 0 0 2px rgba(var(--blue), 0.2);
+}
+
+.srt-controls {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.srt-button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgb(var(--blue));
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.srt-button:hover {
+    background-color: rgba(var(--blue), 0.9);
+}
+
+.srt-button:active {
+    transform: translateY(1px);
+}
+
+.srt-button-secondary {
+    background-color: rgb(var(--gray-d));
+}
+
+.srt-button-secondary:hover {
+    background-color: rgba(var(--gray-d), 0.9);
+}
+
+.srt-output-section {
+    margin-top: 20px;
+}
+
+.srt-output {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 1px solid rgb(var(--gray-d));
+    border-radius: 6px;
+    background-color: rgb(var(--gray));
+    color: rgb(var(--black));
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.srt-message {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: rgb(var(--black));
+    font-size: 14px;
+    display: none;
+}
+
+.srt-message.success {
+    background-color: rgba(var(--blue), 0.2);
+    display: block;
+}
+
+.srt-message.error {
+    background-color: rgba(var(--blue-d), 0.2);
+    display: block;
+}
+    </style>
+</head>
+<body id="html-body">
+    
+    <page-start>
+        <div id="page-title">
+            SRT转文稿
+        </div>
+        <div id="page-content">
+自用工具。代码AI写的。
+            
+<div class="srt-container">
+    
+    <div class="srt-input-section">
+        <label for="srt-input" class="srt-label">SRT字幕输入：</label>
+        <textarea id="srt-input" class="srt-textarea" placeholder="请粘贴SRT格式的字幕内容..."></textarea>
+    </div>
+    
+    <div class="srt-controls">
+        <button id="srt-convert" class="srt-button">
+            <i class="fas fa-exchange-alt"></i> 转换为文本稿
+        </button>
+        <button id="srt-copy" class="srt-button srt-button-secondary">
+            <i class="fas fa-copy"></i> 复制结果
+        </button>
+        <button id="srt-clear" class="srt-button srt-button-secondary">
+            <i class="fas fa-trash"></i> 清空
+        </button>
+    </div>
+    
+    <div class="srt-output-section">
+        <label for="srt-output" class="srt-label">文本稿输出：</label>
+        <div id="srt-output" class="srt-output"></div>
+        <div id="srt-message" class="srt-message"></div>
+    </div>
+</div>
+
+
+
+        </div>
+    </page-start>
+    
+    
+    <script src="https://hw233.vip/MainCode/script.js"></script>
+    <script>
+// 转换SRT字幕为文本稿
+function convertSrtToText(srtContent) {
+    // 检查输入是否为空
+    if (!srtContent.trim()) {
+        showMessage('请输入SRT字幕内容', 'error');
+        return '';
+    }
+    
+    // 按行分割内容
+    const lines = srtContent.split('\n');
+    let result = [];
+    let isDialogueLine = false;
+    
+    // 遍历每行，提取对话内容
+    lines.forEach(line => {
+        // 去除行首尾空白
+        const trimmedLine = line.trim();
+        
+        // 跳过序号行（纯数字）
+        if (/^\d+$/.test(trimmedLine)) {
+            isDialogueLine = false;
+            return;
+        }
+        
+        // 跳过时间轴行（包含 -->）
+        if (trimmedLine.includes('-->')) {
+            isDialogueLine = true;
+            return;
+        }
+        
+        // 空行表示字幕块结束
+        if (trimmedLine === '') {
+            isDialogueLine = false;
+            return;
+        }
+        
+        // 如果是对话行，添加到结果
+        if (isDialogueLine && trimmedLine) {
+            result.push(trimmedLine);
+        }
+    });
+    
+    // 检查是否有提取到内容
+    if (result.length === 0) {
+        showMessage('未找到有效的字幕内容，请检查输入格式', 'error');
+        return '';
+    }
+    
+    // 处理标点符号，使句子更连贯
+    let text = result.join('，');
+    
+    // 简单的标点符号优化
+    text = text.replace(/，。/g, '。');
+    text = text.replace(/，,/g, '，');
+    text = text.replace(/，；/g, '；');
+    text = text.replace(/，？/g, '？');
+    text = text.replace(/，！/g, '！');
+    
+    // 确保最后有一个句号
+    if (!text.endsWith('。') && !text.endsWith('！') && !text.endsWith('？')) {
+        text += '。';
+    }
+    
+    showMessage('转换成功！', 'success');
+    return text;
+}
+
+// 显示消息提示
+function showMessage(text, type = 'info') {
+    const messageElement = document.getElementById('srt-message');
+    messageElement.textContent = text;
+    messageElement.className = 'srt-message';
+    messageElement.classList.add(type);
+    
+    // 3秒后自动隐藏消息
+    setTimeout(() => {
+        messageElement.classList.remove(type);
+    }, 3000);
+}
+
+// 复制结果到剪贴板
+function copyToClipboard() {
+    const outputElement = document.getElementById('srt-output');
+    const text = outputElement.textContent;
+    
+    if (!text) {
+        showMessage('没有可复制的内容', 'error');
+        return;
+    }
+    
+    navigator.clipboard.writeText(text).then(() => {
+        showMessage('内容已复制到剪贴板', 'success');
+    }).catch(err => {
+        showMessage('复制失败，请手动复制', 'error');
+        console.error('复制失败:', err);
+    });
+}
+
+// 清空输入和输出
+function clearAll() {
+    document.getElementById('srt-input').value = '';
+    document.getElementById('srt-output').textContent = '';
+    document.getElementById('srt-message').className = 'srt-message';
+}
+
+// 绑定事件监听
+document.addEventListener('DOMContentLoaded', () => {
+    // 转换按钮
+    document.getElementById('srt-convert').addEventListener('click', () => {
+        const srtContent = document.getElementById('srt-input').value;
+        const text = convertSrtToText(srtContent);
+        document.getElementById('srt-output').textContent = text;
+    });
+    
+    // 复制按钮
+    document.getElementById('srt-copy').addEventListener('click', copyToClipboard);
+    
+    // 清空按钮
+    document.getElementById('srt-clear').addEventListener('click', clearAll);
+    
+    // 支持按Ctrl+Enter转换
+    document.getElementById('srt-input').addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+            document.getElementById('srt-convert').click();
+        }
+    });
+});
+    </script>
+</body>
+</html>
