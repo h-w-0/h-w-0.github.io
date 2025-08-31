@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW的私站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/MainCode/style.css">
+          <style>
+.search-logo {
+            max-width: 220px;
+            height: auto;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .search-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .gstxt {
+            width: 100%;
+            max-width: 600px;
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(var(--blue), 0.6);
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: rgba(var(--white), 0.9);
+            color: rgba(var(--black), 1);
+            transition: all 0.3s ease;
+        }
+
+        .gstxt:focus {
+            outline: none;
+            border-color: rgba(var(--blue), 1);
+            box-shadow: 0 0 0 3px rgba(var(--blue), 0.2);
+        }
+
+        .gstxt::placeholder {
+            color: rgba(var(--black), 0.5);
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background-color: rgba(var(--blue), 0.8);
+            color: rgba(var(--white), 1);
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(var(--blue-d), 1);
+        }
+
+        .engine-checkbox {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 0 auto 25px;
+            max-width: 900px;
+            padding: 0 15px;
+        }
+
+        .engine-group {
+            background-color: rgba(var(--gray), 0.7);
+            border-radius: 8px;
+            padding: 15px 20px;
+            width: 100%;
+            border: 1px solid rgba(var(--blue), 0.3);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            min-width: 120px;
+        }
+
+        .group-title {
+            font-weight: 600;
+            color: rgba(var(--blue-d), 1);
+            margin-right: 10px;
+            text-wrap-mode: nowrap;
+        }
+
+        .select-all-group {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background-color: rgba(var(--blue), 0.7);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .engine-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .engine-group label {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 0;
+            cursor: pointer;
+            color: rgba(var(--black), 0.85);
+            transition: color 0.2s ease;
+        }
+
+        .engine-group label:hover {
+            color: rgba(var(--blue-d), 1);
+        }
+
+        .engine-group input[type="checkbox"] {
+            margin-right: 8px;
+            accent-color: rgba(var(--blue), 0.8);
+        }
+
+        .gbutton {
+            background-color: rgba(var(--blue), 0.9);
+            color: rgba(var(--white), 1);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .gbutton:hover {
+            background-color: rgba(var(--blue-d), 1);
+            box-shadow: 0 4px 8px rgba(var(--blue-d), 0.3);
+        }
+
+        .gbutton:active {
+            box-shadow: 0 2px 4px rgba(var(--blue-d), 0.2);
+        }
+
+        .gbutton {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .engine-group {
+                padding: 12px 15px;
+                gap: 10px;
+            }
+            
+            .group-header {
+                min-width: 100px;
+            }
+            
+            .search-logo {
+                max-width: 180px;
+            }
+            
+            .gstxt {
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .engine-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .group-header {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
+            .engine-options {
+                width: 100%;
+            }
+            
+            .engine-group label {
+                margin-bottom: 8px;
+            }
+        }
+
+    </style>
+</head>
+<body id="html-body">
+    
+<page-start>
+        <div id="page-title">
+            自用搜索工具
+        </div>
+        <div id="page-content">
+            这是一个基于Searxng的搜索工具，方便我找失传媒体之类的玩意。<br>
+            别人怎么用的责任不追究于我。
+
+            <div style="text-align:center">
+                <br>
+                <img class="search-logo" src="https://search.ipv6s.net/static/themes/simple/img/searxng.png" alt="Searxng logo">
+                
+                <form id="searchForm">
+                    <input class="gstxt" type="text" name="q" placeholder="输入关键词" required>
+                    
+                    <div class="control-buttons">
+                        <button type="button" class="control-btn" id="selectAll">全选所有</button>
+                        <button type="button" class="control-btn" id="deselectAll">取消所有</button>
+                        <button type="button" class="control-btn" id="recommended">推荐预设</button>
+                    </div>
+                    
+                    <button type="submit" class="gbutton">开始搜索</button>
+                    
+                    <div class="engine-checkbox">
+                        <!-- 国际搜索引擎 -->
+                        <div class="engine-group">
+                            <div class="group-header">
+                                <span class="group-title">国际引擎</span>
+                                <button type="button" class="select-all-group">全选</button>
+                            </div>
+                            <div class="engine-options">
+                                <label><input type="checkbox" name="engine" value="!go"> 谷歌</label>
+                                <label><input type="checkbox" name="engine" value="!bi"> 必应</label>
+                                <label><input type="checkbox" name="engine" value="!yh"> 雅虎</label>
+                                <label><input type="checkbox" name="engine" value="!br"> Brave</label>
+                                <label><input type="checkbox" name="engine" value="!ddg"> DuckDuckGo</label>
+                            </div>
+                        </div>
+                        
+                        <!-- 中文搜索引擎 -->
+                        <div class="engine-group">
+                            <div class="group-header">
+                                <span class="group-title">中文引擎</span>
+                                <button type="button" class="select-all-group">全选</button>
+                            </div>
+                            <div class="engine-options">
+                                <label><input type="checkbox" name="engine" value="!bd"> 百度</label>
+                                <label><input type="checkbox" name="engine" value="!360so"> 360搜索</label>
+                                <label><input type="checkbox" name="engine" value="!sogou"> 搜狗</label>
+                                <label><input type="checkbox" name="engine" value="!qk"> 夸克</label>
+                            </div>
+                        </div>
+                        
+                        <!-- 其他引擎 -->
+                        <div class="engine-group">
+                            <div class="group-header">
+                                <span class="group-title">其他引擎</span>
+                                <button type="button" class="select-all-group">全选</button>
+                            </div>
+                            <div class="engine-options">
+                                <label><input type="checkbox" name="engine" value="!wa"> WolframAlpha</label>
+                                <label><input type="checkbox" name="engine" value="!sp"> Startpage</label>
+                                <label><input type="checkbox" name="engine" value="!qw"> Qwant</label>
+                            </div>
+                        </div>
+                        
+                        <!-- 地区性引擎 -->
+                        <div class="engine-group">
+                            <div class="group-header">
+                                <span class="group-title">地区引擎</span>
+                                <button type="button" class="select-all-group">全选</button>
+                            </div>
+                            <div class="engine-options">
+                                <label><input type="checkbox" name="engine" value="!szn"> Seznam (CZ)</label>
+                                <label><input type="checkbox" name="engine" value="!goo"> Goo (JA)</label>
+                                <label><input type="checkbox" name="engine" value="!nvr"> Naver (KO)</label>
+                                <label><input type="checkbox" name="engine" value="!ts"> Tagesschau (DE)</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </page-start>
+    <script src="/MainCode/script.js"></script>
+    <script src="/search-tool/search.js"></script>
+</body>
+</html>
