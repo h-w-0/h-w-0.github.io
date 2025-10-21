@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户分数对比</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            padding: 10px;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .stat-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 10px;
+        }
+        
+        .user-headers {
+            display: flex;
+            gap: 10px;
+            padding: 8px;
+            font-weight: bold;
+        }
+        
+        .user-header {
+            flex: 1;
+            padding: 6px;
+            text-align: center;
+            border-bottom: 2px solid #ccc;
+            min-width: 100px;
+        }
+        
+        .label-column {
+            min-width: 80px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .stat-item {
+            display: flex;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            flex-wrap: wrap;
+        }
+        
+        .value-box {
+            flex: 1;
+            padding: 6px;
+            border-radius: 3px;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .higher {
+            background-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .lower {
+            background-color: rgba(220, 53, 69, 0.3);
+        }
+        
+        .equal {
+            background-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .input-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+            padding: 0 10px;
+        }
+        
+        input {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: fit-content;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .loading, .error {
+            color: #666;
+            padding: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .label-column {
+                min-width: auto;
+                width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .value-box {
+                width: calc(50% - 5px);
+                min-width: auto;
+            }
+        }
+
+        .input-section *{
+            margin: 0 auto;
+        }
+        
+        .error-details {
+            text-align: left;
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #f8d7da;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">加载中...</div>
+    <div id="error" class="error" style="display: none;"></div>
+    
+    <div id="stats" style="display: none;">
+        <!-- 用户标题行 -->
+        <div class="user-headers">
+            <div class="label-column"></div>
+            <div id="user1Header" class="user-header"></div>
+            <div id="user2Header" class="user-header"></div>
+        </div>
+        
+        <!-- 统计数据容器 -->
+        <div class="stat-container"></div>
+    </div>
+    
+    <div class="input-section">
+        <select id="branch" style="padding: 6px; border: 1px solid #ccc; border-radius: 3px; width: 100%; max-width: 400px;">
+            <!-- 由JS动态填充 -->
+        </select>
+        <input type="text" id="user1" placeholder="输入第一个用户名">
+        <input type="text" id="user2" placeholder="输入第二个用户名">
+        <button id="compareBtn">对比</button>
+        <button id="retryBtn" style="display: none; background-color: #2196F3;">重试</button>
+    </div>
+
+    <script>
+        // 支持的站点列表
+        const branchInfo = {
+            "cn": { url: "http://backrooms-wiki-cn.wikidot.com", name: "后室中文维基" },
+            "all": { url: "", name: "所有站点" }
+        };
+
+        // API端点列表
+        const apiList = ["https://api.crom.avn.sh/graphql", "https://zh.xjo.ch/crom/graphql"];
+        
+        // 从URL参数获取默认用户
+        const urlParams = new URLSearchParams(window.location.search);
+        const defaultUser1 = urlParams.get('user1') || 'H_W';
+        const defaultUser2 = urlParams.get('viewer') || 'H_W';
+        let currentEndpointIndex = 0;
+        let lastRequestTimestamp = 0;
+        const MIN_REQUEST_INTERVAL = 1000; // 最小请求间隔(毫秒)
+        
+        // 初始化页面
+        function initPage() {
+            // 填充站点选择下拉框
+            const branchSelect = document.getElementById('branch');
+            Object.entries(branchInfo).forEach(([key, { name }]) => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = name;
+                if (key === 'cn') option.selected = true; // 默认中文站
+                branchSelect.appendChild(option);
+            });
+            
+            // 设置默认用户名
+            document.getElementById('user1').value = defaultUser1;
+            document.getElementById('user2').value = defaultUser2;
+            
+            // 绑定事件监听
+            document.getElementById('compareBtn').addEventListener('click', handleCompare);
+            document.getElementById('retryBtn').addEventListener('click', handleCompare);
+            
+            // 初始加载
+            handleCompare();
+        }
+        
+        // 处理对比请求
+        function handleCompare() {
+            const user1 = document.getElementById('user1').value.trim();
+            const user2 = document.getElementById('user2').value.trim();
+            
+            // 验证输入
+            if (!user1 || !user2) {
+                showError('请输入两个用户名进行对比');
+                return;
+            }
+            
+            // 限制请求频率
+            const now = Date.now();
+            if (now - lastRequestTimestamp < MIN_REQUEST_INTERVAL) {
+                showError('请求过于频繁，请稍后再试');
+                return;
+            }
+            lastRequestTimestamp = now;
+            
+            // 显示加载状态
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('stats').style.display = 'none';
+            document.getElementById('retryBtn').style.display = 'none';
+            
+            // 发起请求
+            fetchUserStats(user1, user2);
+        }
+        
+        // 获取用户统计数据
+        function fetchUserStats(user1, user2) {
+            const branch = document.getElementById('branch').value;
+            const { url: baseUrl } = branchInfo[branch];
+            
+            // GraphQL查询
+            const query = `
+                query GetUserStats($user1: String!, $user2: String!, $baseUrl: String!) {
+                    user1: user(name: $user1) {
+                        name
+                        statistics(baseUrl: $baseUrl) {
+                            rank
+                            totalRating
+                            meanRating
+                            pageCount
+                        }
+                    }
+                    user2: user(name: $user2) {
+                        name
+                        statistics(baseUrl: $baseUrl) {
+                            rank
+                            totalRating
+                            meanRating
+                            pageCount
+                        }
+                    }
+                }
+            `;
+            
+            // 重置端点索引
+            currentEndpointIndex = 0;
+            
+            // 递归请求API，支持多端点 fallback
+            function request() {
+                if (currentEndpointIndex >= apiList.length) {
+                    showError('所有API端点均请求失败，请稍后再试', true);
+                    return;
+                }
+                
+                const currentEndpoint = apiList[currentEndpointIndex];
+                updateLoadingMessage(`正在连接到服务器 (${currentEndpointIndex + 1}/${apiList.length})`);
+                
+                fetch(currentEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query,
+                        variables: { 
+                            user1, 
+                            user2,
+                            baseUrl
+                        }
+                    })
+                })
+                .then(handleResponse)
+                .then(handleData)
+                .catch(handleError);
+            }
+            
+            // 处理响应
+            function handleResponse(res) {
+                if (!res.ok) {
+                    throw new Error(`HTTP状态码: ${res.status} (${res.statusText})`);
+                }
+                return res.json();
+            }
+            
+            // 处理返回数据
+            function handleData(data) {
+                if (data.errors) {
+                    throw new Error(`API错误: ${data.errors[0].message}`);
+                }
+                
+                const [userA, userB] = [data.data.user1, data.data.user2];
+                
+                // 验证数据完整性
+                if (!userA) throw new Error(`用户 "${user1}" 不存在或没有数据`);
+                if (!userB) throw new Error(`用户 "${user2}" 不存在或没有数据`);
+                if (!userA.statistics) throw new Error(`用户 "${user1}" 没有统计数据`);
+                if (!userB.statistics) throw new Error(`用户 "${user2}" 没有统计数据`);
+                
+                // 更新UI显示
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('stats').style.display = 'block';
+                updateStats(userA, userB);
+            }
+            
+            // 处理错误
+            function handleError(err) {
+                console.error(`API端点 ${apiList[currentEndpointIndex]} 错误:`, err.message);
+                currentEndpointIndex++;
+                
+                // 如果还有其他端点，尝试下一个
+                if (currentEndpointIndex < apiList.length) {
+                    setTimeout(request, 500); // 短暂延迟后重试
+                } else {
+                    showError(`所有API端点请求失败: ${err.message}`, true);
+                }
+            }
+            
+            // 开始请求
+            request();
+        }
+        
+        // 更新加载消息
+        function updateLoadingMessage(message) {
+            document.getElementById('loading').textContent = message;
+        }
+        
+        // 更新统计数据显示
+        function updateStats(userA, userB) {
+            // 设置用户名标题
+            document.getElementById('user1Header').textContent = userA.name;
+            document.getElementById('user2Header').textContent = userB.name;
+            
+            // 清空现有内容
+            const statsContainer = document.querySelector('.stat-container');
+            statsContainer.innerHTML = '';
+            
+            // 定义要比较的统计项
+            const statsToCompare = [
+                { 
+                    label: '排名', 
+                    key: 'rank',
+                    compare: (a, b) => a < b ? 'higher' : a > b ? 'lower' : 'equal',
+                    format: (value) => `#${value}`
+                },
+                { 
+                    label: '总评分', 
+                    key: 'totalRating',
+                    compare: (a, b) => a > b ? 'higher' : a < b ? 'lower' : 'equal',
+                    format: (value) => value.toFixed(1)
+                },
+                { 
+                    label: '平均分', 
+                    key: 'meanRating',
+                    compare: (a, b) => a > b ? 'higher' : a < b ? 'lower' : 'equal',
+                    format: (value) => value.toFixed(2)
+                },
+                { 
+                    label: '页面数', 
+                    key: 'pageCount',
+                    compare: (a, b) => a > b ? 'higher' : a < b ? 'lower' : 'equal',
+                    format: (value) => value.toString()
+                }
+            ];
+            
+            // 创建统计项元素
+            statsToCompare.forEach(stat => {
+                try {
+                    const aVal = userA.statistics[stat.key];
+                    const bVal = userB.statistics[stat.key];
+                    const aClass = stat.compare(aVal, bVal);
+                    const bClass = aClass === 'higher' ? 'lower' : aClass === 'lower' ? 'higher' : 'equal';
+                    
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'stat-item';
+                    itemDiv.innerHTML = `
+                        <div class="label-column">${stat.label}</div>
+                        <div class="value-box ${aClass}">${stat.format(aVal)}</div>
+                        <div class="value-box ${bClass}">${stat.format(bVal)}</div>
+                    `;
+                    statsContainer.appendChild(itemDiv);
+                } catch (err) {
+                    console.error(`处理统计项 "${stat.label}" 时出错:`, err);
+                }
+            });
+        }
+        
+        // 显示错误信息
+        function showError(message, showRetry = false) {
+            document.getElementById('loading').style.display = 'none';
+            
+            let errorHtml = `<p>${message}</p>`;
+            
+            // 如果是API请求失败，显示详细的故障排除建议
+            if (showRetry) {
+                errorHtml += `
+                <div class="error-details">
+                    <strong>可能的原因：</strong>
+                    <ul>
+                        <li>网络连接问题</li>
+                        <li>API服务暂时不可用</li>
+                        <li>浏览器跨域访问限制</li>
+                    </ul>
+                    <strong>建议：</strong>
+                    <ul>
+                        <li>检查网络连接</li>
+                        <li>确认用户名是否正确</li>
+                        <li>尝试选择其他站点</li>
+                        <li>稍后重试</li>
+                    </ul>
+                </div>`;
+            }
+            
+            document.getElementById('error').innerHTML = errorHtml;
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('stats').style.display = 'none';
+            document.getElementById('retryBtn').style.display = showRetry ? 'block' : 'none';
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', initPage);
+    </script>
+</body>
+</html>
