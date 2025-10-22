@@ -1,0 +1,491 @@
+<html>
+  <style>
+
+body {
+  min-height: 200px;
+}
+
+:root {
+  font-family: sans-serif;
+}
+
+.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {
+    padding: 10px;
+  }
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  > label {
+    margin-left: 10px;
+  }
+  
+  > * {
+    margin-bottom: 6px;
+  }
+}
+
+#downloadimg {
+  margin-top: 6px;
+  border: 1px solid #999;
+  background-color: #ddd;
+  color: black;
+  cursor: pointer;
+  width: fit-content;
+  text-decoration: none;
+  font-size: 200%;
+  margin-left: 10px;
+}
+
+#filecontainer, #linkcontainer {
+  width: 180px;
+}
+
+#filecontainer input[type=file] {
+  max-width: 100%;
+}
+
+button.selected {
+  border: 2px solid black;
+  border-radius: 3px;
+}
+
+#scaledisplay {
+  margin-bottom: 6px;
+}
+
+#errorcontainer {
+  max-width: 50%;
+}
+
+body.loading::after {
+  content: "Loading...";
+  font-size: 300%;
+  background-color: white;
+  color: black;
+  padding: 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0007;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+body.loading > * {
+  opacity: 0.5;
+}
+
+.horizontal {
+  margin: auto;
+  width: 840px;
+}
+
+#imagepreview {
+  margin: auto;
+  border: 1px solid black;
+  margin-bottom: 5px;
+}
+
+#pastecontainer {
+  font-style: italic;
+  color: #666;
+}
+
+</style>
+<div style="display: none;" id="resistfingerprintingmsg">
+<span style="color: #c00;">警告：</span> 
+
+由于你在火狐浏览器中启用了<code>resistFingerprinting</code>配置项，本工具可能无法正常为你工作。该配置项会导致本工具失效，因为本工具会使用 HTML5 的<code>&lt;canvas&gt;</code>元素来调整图片尺寸和重新格式化图片。
+尽管本工具对<code>&lt;canvas&gt;</code>的使用是无害的，但其他网站会以更恶意的方式利用<code>&lt;canvas&gt;</code>—— 它们通过检测不同浏览器中<code>&lt;canvas&gt;</code>绘制图像的细微差异，就能唯一识别你的身份并出于广告目的对你进行追踪，这一过程被称为 “指纹识别”。
+为了应对这种情况，<code>resistFingerprinting</code>会阻止网站从<code>&lt;canvas&gt;</code>元素中获取任何有效数据，转而用随机数据替代。但即便本工具并不会进行任何指纹识别操作，这种机制也会导致它无法从<code>&lt;canvas&gt;</code>中提取调整后的图片供你下载。
+对此，你有以下几种选择：
+
+<ul>
+  <li>使用其他工具调整图片尺寸，例如<a target="_parent" href="https://imagemagick.org/script/download.php">ImageMagick</a>或下方列出的其他项目。</li>
+  <li>在<code>about:config</code>中暂时禁用<code>resistFingerprinting</code></li>
+  <li>使用其他浏览器，如Brave、Chrome或Safari。</li>
+</ul>
+
+</div>
+<div class="horizontal">
+<div>
+<button id="usefile" class="selected">使用文件</button>
+<button id="pasteimage" class="">粘贴/拖拽图片</button>
+<button id="uselink" class="">使用链接</button>
+<div id="linkcontainer" style="display: none;">
+<br>
+<label>图片链接：</label>
+<br>
+<textarea id="imglink" style="width: 100%; height:130px;" placeholder="将图片链接粘贴到该文本框中。请注意，部分网站可能会因跨域限制而无法加载链接。"></textarea>
+<br>
+</div>
+<div id="pastecontainer" style="display: none;">
+<p>使用 Ctrl+V 粘贴图片。此外，也可点击并拖拽图片至此处。</p>
+</div>
+<div id="filecontainer" style="">
+<br>
+<label>图片文件：</label>
+<br>
+<input id="imgfile" type="file" accept="image/*">
+<br>
+</div>
+</div>
+<div id="errorcontainer" style="color: #cc0000;"></div>
+<div id="showonimageload" style="display: none;">
+<div class="settings-grid">
+<select id="imageformat" value="image/webp">
+  <option value="image/webp">WebP （推荐）</option>
+  <option value="image/jpeg">JPG</option>
+  <option value="image/png">PNG （不推荐）</option>
+</select>
+<label>输出格式</label>
+<input id="scaleinput" type="range" min="0.03" max="1" value="1" step="0.001">
+<label>缩放</label>
+<input id="qualityinput" type="range" min="0.0" max="1" value="0.8" step="0.001">
+<label id="qualitylabel">质量</label>
+<div>
+<div id="scaledisplay"></div>
+<div id="sizedisplay"></div>
+</div>
+<a id="downloadimg">下载</a>
+</div>
+</div>
+</div>
+<br>
+<img id="imagepreview">
+<canvas id="img" style="display: none;"></canvas>
+
+<script>
+function setHeight(d) {
+   document.body.style.height = `${d}px`;
+  if (iframe) iframe.parentElement.removeChild(iframe);
+  iframe = document.createElement("iframe");
+  document.body.appendChild(iframe);
+  iframe.src = `https://scp-sandbox-3.wikidot.com/common--javascript/resize-iframe.html#${d}/${window.location.pathname.split("/").at(-3)}`;
+  iframe.style.display = "none";
+}
+
+function isResistFingerprintingEnabled() {
+  const dummy = document.createElement("canvas");
+  const ctx = dummy.getContext("2d");
+  ctx.fillStyle = "#000000";
+  ctx.fillRect(-1, -1, 3, 3);
+
+  const imageData = ctx.getImageData(0, 0, 1, 1).data;
+  return imageData[0] !== 0 || imageData[1] !== 0 || imageData[2] !== 0;
+}
+
+if (isResistFingerprintingEnabled()) resistfingerprintingmsg.style.display = "block";
+
+const ctx = img.getContext("2d");
+
+const exts = {
+  "image/webp": ".webp",
+  "image/jpeg": ".jpg",
+  "image/png": ".png"
+}
+
+let resultingsize = Infinity;
+
+let imageSrc;
+let scale = 1;
+let imgname;
+const updateImage = throttle(function () {
+    let lastImageUrl;
+    img.width = imageSrc.width * scale;
+    img.height = imageSrc.height * scale;
+    ctx.drawImage(imageSrc, 0, 0, imageSrc.width * scale, imageSrc.height * scale);
+    return new Promise((resolve, reject) => {
+    img.toBlob((blob) => {
+       if (lastImageUrl) {
+         URL.revokeObjectURL(lastImageUrl);
+         lastImageUrl = undefined;
+       }
+       scaledisplay.innerText = `尺寸： ${img.width}x${img.height}`;
+       const percent = (blob.size / ogfile.size * 100);
+       sizedisplay.innerText = `大小： ${Math.round(blob.size/1000)}kB （原始大小的${percent.toPrecision(3)}% ）`;
+       resultingsize = percent;
+       sizedisplay.style.color = percent > 100 ? "red" : "black";
+       lastImageUrl = URL.createObjectURL(blob);
+       imagepreview.src = lastImageUrl;
+       downloadimg.href = lastImageUrl;
+       downloadimg.download = imgname + exts[imageformat.value];
+       onSuccess();
+       resolve();
+       
+    }, imageformat.value, Number(qualityinput.value)); });
+}, { limits: [], maxConcurrentRequests: 1 });
+
+qualityinput.oninput = () => {
+  updateImage();
+}
+
+imageformat.oninput = () => {
+  updateImage();
+  if (imageformat.value === "image/png") {
+    qualityinput.style.display = "none";
+    qualitylabel.style.display = "none";
+  } else {
+    qualityinput.style.display = "block";
+    qualitylabel.style.display = "block";
+  }
+}
+
+scaleinput.oninput = () => {
+  scale = scaleinput.value;
+  updateImage();
+}
+
+function onError() {
+   showonimageload.style.display = "none";
+  imagepreview.style.display = "none";
+}
+
+function onSuccess() {
+  showonimageload.style.display = "block";
+  imagepreview.style.display = "block";
+  pastecontainer.style.display = "none";
+  errorcontainer.innerText = "";
+}
+
+async function registerImageUpdated() {
+    errorcontainer.innerText = "";
+    scaleinput.value = Math.min(1, 600 / imageSrc.width);
+    scale = scaleinput.value;
+    qualityinput.value = 0.8;
+    await updateImage();
+    const lossysize = resultingsize;
+    qualityinput.value = 1;
+    await updateImage();
+    const losslesssize = resultingsize;
+    if (losslesssize > lossysize) {
+      qualityinput.value = 0.8;
+      await updateImage();
+    }
+}
+
+imglink.oninput= () => {
+  try {
+    new URL(imglink.value);
+  } catch (e) {
+    errorcontainer.innerText = `This is not a valid URL.`;
+    onError();
+    return;
+  }
+
+  imageSrc = new Image();
+  imageSrc.crossOrigin = "anonymous";
+  imageSrc.onload = async () => {
+    ogfile = await (await fetch(imglink.value)).blob();
+    registerImageUpdated();
+  }
+  imageSrc.onerror = (e) => {
+    console.error(e);
+    if (imglink.value.startsWith("https://commons.wikimedia.org")) {
+      errorcontainer.innerText = `This is a link to a web page, not a link to an image. Try right-clicking the image to get its link, or clicking "Original file" below the image.`;
+    } else {
+      errorcontainer.innerText = `Failed to load this link. Make sure you are using a link to an image file, not a link to a web page with an image within it. If you're sure that this is a link to an image, the website may not be letting you retrieve the image due to Cross Origin Request Sharing (CORS) restrictions — try copying and pasting the image or downloading it and reuploading as a file.`;
+    }
+    onError();
+  }
+  imgname = imglink.value.match(/\/[^/]*?$/g)?.[0].replace(/\.\w+$/g, "").slice(1);
+  imageSrc.src = imglink.value;
+}
+
+imgfile.onchange = () => {
+  if (imgfile.files[0]) loadImage(imgfile.files[0]);
+}
+
+let ogfile;
+function loadImage(file) {
+  ogfile = file;
+  imageSrc = new Image();
+  document.body.className = "loading";
+  imageSrc.onload = () => {
+    document.body.className = "";
+    registerImageUpdated();
+  }
+  imageSrc.onerror = (e) => {
+    document.body.className = "";
+    console.error(e);
+    errorcontainer.innerText = `Failed to load this file. It may be corrupted or not an image.`;
+    onError();
+  }
+  imageSrc.src = URL.createObjectURL(file);
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") return;
+  if (e.key === "v" && e.ctrlKey) {
+    document.body.className = "loading";
+  }
+});
+
+function loadDataTransfer(dt, errmsg) {
+  let file = dt.files[0];
+  
+  if (!file) {
+    for (const item of dt.items) {
+      if (item.kind === "other") {
+        file = item.getAsFile();
+        break;
+      }
+    }
+  }
+  if (!file) {
+    for (const item of dt.items) {
+      if (item.kind === "string") {
+        item.getAsString(str => {
+          imglink.value = str.split("\n")[0];
+          uselink.click();
+          imglink.oninput();
+        });
+        return;
+      }
+    }
+  }
+  if (!file || !file.type.startsWith("image")) {
+    window.alert(errmsg);
+    document.body.className = "";
+    return false;
+  }
+
+  imgname = file.name.replace(/\.\w+$/g, "");
+
+  loadImage(file);
+  return true;
+}
+
+window.addEventListener("paste", (e) => {
+  document.body.className = "loading";
+  console.log(e.target.tagName);
+  if (e.target.tagName === "TEXTAREA" || e.target.tagName === "INPUT") {
+    document.body.className = "";
+    return;
+  }
+  
+  if (!loadDataTransfer(e.clipboardData, "You don't have an image in your clipboard.")) return;
+  pasteimage.click();
+});
+
+let dragDoneTime = 0;
+
+setInterval(() => {
+  if (Date.now() > dragDoneTime)
+    document.body.style.backgroundColor = "transparent";
+}, 50);
+
+document.body.addEventListener("dragover", (e) => {
+  document.body.style.backgroundColor = "#dfd";
+  e.preventDefault();
+  dragDoneTime = Date.now() + 200;
+});
+
+document.body.addEventListener("dragend", () => {
+  document.body.style.backgroundColor = "transparent";
+});
+
+document.body.addEventListener("drop", (e) => {
+  document.body.style.backgroundColor = "transparent";
+  e.preventDefault();
+
+  if (!loadDataTransfer(e.dataTransfer, "File was unable to be converted into an image.")) return;
+
+  pasteimage.click();
+});
+
+uselink.onclick = () => {
+  linkcontainer.style.display = "block";
+  filecontainer.style.display = "none";
+  pastecontainer.style.display = "none";
+  uselink.className = "selected";
+  usefile.className = "";
+  pasteimage.className = "";
+}
+usefile.onclick = () => {
+  linkcontainer.style.display = "none";
+  filecontainer.style.display = "block";
+  pastecontainer.style.display = "none";
+  uselink.className = "";
+  usefile.className = "selected";
+  pasteimage.className = "";
+}
+pasteimage.onclick = () => {
+  linkcontainer.style.display = "none";
+  filecontainer.style.display = "none";
+  pastecontainer.style.display = "block";
+  uselink.className = "";
+  usefile.className = "";
+  pasteimage.className = "selected";
+}
+
+document.body.addEventListener("resize", () => {
+  setHeight(document.body.getBoundingClientRect().height);
+});
+
+function throttle(callback, options) {
+  let queue = [];
+  const requestHistorySize = options.limits.reduce(
+    (prev, curr) => Math.max(prev, curr.duration),
+    0
+  );
+  let requestHistory = [];
+  const pendingRequests = /* @__PURE__ */ new Set();
+  setInterval(() => {
+    while (true) {
+      const req = queue.at(0);
+      if (!req) return;
+      const time = Date.now();
+      requestHistory = requestHistory.filter(
+        (h) => (time - h.time) / 1e3 <= requestHistorySize
+      );
+      if (pendingRequests.size >= options.maxConcurrentRequests) return;
+      for (const l of options.limits) {
+        let reqCount = 0;
+        for (const h of requestHistory) {
+          const secondsAgo = (time - h.time) / 1e3;
+          if (secondsAgo <= l.duration) {
+            reqCount++;
+          }
+        }
+        if (reqCount >= l.maxRequests) {
+          return;
+        }
+      }
+      queue.shift();
+      requestHistory.push({
+        time: Date.now()
+      });
+      const responsePromise = callback(...req.params);
+      pendingRequests.add(responsePromise);
+      (async () => {
+        const response = await responsePromise;
+        req.callback(response);
+        pendingRequests.delete(responsePromise);
+      })();
+    }
+  });
+  const fn = (...params) => {
+    return new Promise((resolve, reject) => {
+      queue.push({
+        params,
+        callback: (rt) => {
+          resolve(rt);
+        }
+      });
+    });
+  };
+  fn._throttled = true;
+  return fn;
+}
+
+</script>
+</html>
