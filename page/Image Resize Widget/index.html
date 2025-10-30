@@ -290,9 +290,9 @@ imglink.oninput= () => {
   imageSrc.onerror = (e) => {
     console.error(e);
     if (imglink.value.startsWith("https://commons.wikimedia.org")) {
-      errorcontainer.innerText = `This is a link to a web page, not a link to an image. Try right-clicking the image to get its link, or clicking "Original file" below the image.`;
+      errorcontainer.innerText = `这是指向网页的链接，而非指向图片的链接。尝试右键点击图片以获取其链接，或者点击【附件】- 信息 查找“完整的文件URL”`;
     } else {
-      errorcontainer.innerText = `Failed to load this link. Make sure you are using a link to an image file, not a link to a web page with an image within it. If you're sure that this is a link to an image, the website may not be letting you retrieve the image due to Cross Origin Request Sharing (CORS) restrictions — try copying and pasting the image or downloading it and reuploading as a file.`;
+      errorcontainer.innerText = `此链接加载失败。请确保你使用的是图片文件的链接，而非 “包含图片的网页” 的链接。若你确认这是图片链接，该网站可能因跨域限制（CORS），阻止你获取此图片——可尝试复制粘贴图片，或下载后重新上传为文件。`;
     }
     onError();
   }
@@ -316,7 +316,7 @@ function loadImage(file) {
   imageSrc.onerror = (e) => {
     document.body.className = "";
     console.error(e);
-    errorcontainer.innerText = `Failed to load this file. It may be corrupted or not an image.`;
+    errorcontainer.innerText = `文件加载失败，可能已损坏或并非图片文件。`;
     onError();
   }
   imageSrc.src = URL.createObjectURL(file);
@@ -372,7 +372,7 @@ window.addEventListener("paste", (e) => {
     return;
   }
   
-  if (!loadDataTransfer(e.clipboardData, "You don't have an image in your clipboard.")) return;
+  if (!loadDataTransfer(e.clipboardData, "剪贴板中未检测到图片。")) return;
   pasteimage.click();
 });
 
@@ -397,7 +397,7 @@ document.body.addEventListener("drop", (e) => {
   document.body.style.backgroundColor = "transparent";
   e.preventDefault();
 
-  if (!loadDataTransfer(e.dataTransfer, "File was unable to be converted into an image.")) return;
+  if (!loadDataTransfer(e.dataTransfer, "文件无法被转换为图片")) return;
 
   pasteimage.click();
 });
