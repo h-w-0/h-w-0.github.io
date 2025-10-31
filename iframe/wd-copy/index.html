@@ -1,0 +1,104 @@
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+<style type="text/css">
+#button, #button-2 {
+    cursor: pointer;
+    color: #191410;
+    transition: background-color 80ms cubic-bezier(.4,0,.2,1);
+    font-weight: 400;
+    font-size: 14px;
+    width: 50%;
+    border: none;
+    background-color: #ede9df;
+    padding: 8px 14px;
+    text-align: left;
+    display: inline-block;
+    box-sizing: border-box;
+}
+#button {
+    border-right: 1px solid #ddd9d0;
+}
+#button-2 {
+    border-left: 1px solid #ddd9d0;
+}
+#button:active, #button:hover,
+#button-2:active, #button-2:hover {
+    color: #191410;
+    background-color: #b4b0a7;
+}
+.wrapper {
+    width: 100%;
+    display: flex;
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+    <button id="button">默认按钮1</button>
+    <button id="button-2">默认按钮2</button>
+</div>
+<script>
+function getUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    const result = {};
+    for (const [key, value] of params.entries()) {
+        result[key] = decodeURIComponent(value);
+    }
+    return result;
+}
+
+function execCopy(text) {
+    try {
+        return navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+    } catch (e) {
+        const temp = document.createElement('div');
+        const pre = document.createElement('pre');
+        pre.textContent = text;
+        temp.appendChild(pre);
+        const style = temp.style;
+        style.position = 'fixed';
+        style.left = '-100%';
+        document.body.appendChild(temp);
+        
+        const selection = document.getSelection();
+        selection.selectAllChildren(temp);
+        const result = document.execCommand('copy');
+        
+        selection.removeAllRanges();
+        document.body.removeChild(temp);
+        return result;
+    }
+}
+
+// 初始化页面
+function init() {
+    const params = getUrlParams();
+    const button1 = document.getElementById('button');
+    const button2 = document.getElementById('button-2');
+
+    button1.textContent = params['btn-1-text'] || '默认按钮1';
+    button2.textContent = params['btn-2-text'] || '默认按钮2';
+
+    const copyText1 = params['btn-1'] || '默认复制内容1';
+    const copyText2 = params['btn-2'] || '默认复制内容2';
+
+    button1.addEventListener('click', () => {
+        if (execCopy(copyText1)) {
+        } else {
+            alert('复制失败！');
+        }
+    });
+
+    button2.addEventListener('click', () => {
+        if (execCopy(copyText2)) {
+        } else {
+            alert('复制失败！');
+        }
+    });
+}
+
+// 页面加载完成后初始化
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
