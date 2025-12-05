@@ -3286,3 +3286,27 @@ p#flag-user-options-flag {
         text-align: left;
     }
 }
+
+
+/*额外，我也不知道是啥*/
+.achbox-medals, .achbox-plaques {
+    --wrap-bgcl-000: rgb(var(--global-pale-color));
+    --wrap-bgcl-111: var(--wrap-bgcl-000);
+    --wrap-bgcl-222: var(--wrap-bgcl-000);
+    --text-shadow111: rgb(var(--global-dark-color));
+    --text-shadow222: rgb(var(--global-light-color));
+}
+
+.sd-container {
+    --sd-border: var(--global-txt);
+
+    --sd-symbol: var(--sd-border);
+
+    --sd-bullets: var(--sd-border);
+    --sd-text: var(--dark-ui-txt);
+}
+
+.extrabox {
+    --box-border: var(--global-border);
+    --box-shadow: var(--global-border);
+}
