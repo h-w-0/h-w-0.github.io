@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Jim+Nightshade&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almendra+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zhi+Mang+Xing&display=swap');
+@import url('https://font-now.netlify.app/api/css?url=/font/14c9bb87-5184-5eb2-a433-de397f94415d/result.css');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:ital,wght@0,300..700;1,300..700&display=swap');
+:root {
+    --global-accent-1: 100, 10, 0;
+    --global-accent-2: 180, 90, 100;
+    --global-accent-3: 120, 120, 120;
+ 
+    --global-pale-color: 240, 235, 235;
+    --global-light-color: 200, 170, 170;
+    --global-dark-color: var(--global-accent-1);
+ 
+    --global-shadow: 60, 60, 60;
+ 
+    --header-bg: var(--dark-ui-bg);
+    --header-txt: var(--dark-ui-txt);
+    --header-hover-bg: var(--light-ui-bg);
+    --header-hover-txt: var(--global-dark-color);
+    --topbar-hover-bg: var(--header-hover-bg);
+    --topbar-hover-txt: var(--header-hover-txt);
+    --dropdown-hover-bg: var(--header-hover-bg);
+    --dropdown-hover-txt: var(--header-hover-txt);
+    --user-hover-drop-bg: var(--header-bg);
+    --user-hover-drop-txt: var(--header-txt);
+ 
+    --content-bg: var(--global-white-color);
+ 
+    --header-title: "THE CHRYSALIS";
+    --banner-title: "THE CHRYSALIS";
+    --banner-subtitle: "你孵化自这里";
+ 
+    --banner-title-size: clamp(2rem, calc(1.5rem + 3vw), 5rem);
+ 
+    --header-font: var(--title-font);
+    --banner-font: "Almendra Display", "Noto Serif SC", "Noto Serif TC", Times New Roman, Arial, serif;
+    --title-font: var(--serif);
+ 
+    --handwrite: "Jim Nightshade", "Zhi Mang Xing", Brush Script MT, cursive;
+    --serif: "Cormorant Infant", "Noto Serif SC", "Noto Serif TC", Times New Roman, Arial, serif;
+ 
+    --bg-1: url(http://brsandbox-pro.wikidot.com/local--files/beijin/kuan-hudie-qian-222);
+    --bg-2: url(http://brsandbox-pro.wikidot.com/local--files/beijin/kuan-hudie-hou-2);
+ 
+    --meta-toolbar: url("data:image/svg+xml,%3Csvg width='192mm' height='64mm' viewBox='0 0 192 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.852 30h36.296C51.17 30 52 30.83 52 31.852v.296C52 33.17 51.17 34 50.148 34H13.852A1.852 1.852 0 0 1 12 32.148v-.296C12 30.83 12.83 30 13.852 30z' paint-order='fill markers stroke'/%3E%3Cpath fill='none' stroke-width='4' stroke-linecap='round' stroke-linejoin='round' stroke-miterlimit='.6' stroke='%23000' d='M76 12h40v40H76zM140 12l40 40M180 12l-40 40'/%3E%3C/svg%3E");
+    --curvedsvg: url("data:image/svg+xml,%3Csvg width='744.727' height='744.727' viewBox='0 0 744.727 744.727' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M712.7 216.896c24.027 55.344 6.843 128.205-57.747 122.14 10.958 6.173 30.888 13.623 41.247 14.475 11.153.916 32.083 1.933 48.527-5.886V185.268c-4.974 0-11.841.642-16.727-.277-39.75-7.478-51.755-37.751-48.947-62.166-25.687-1.072-56.14-30.758-50.244-66.825.954-5.836 3.47-32.182 43.918-46.182-16.2 0-31.277 2.187-44.727 12.18-40.99 30.455-27.707 98.643 15.436 106.474-36.663 11.431-55.043 40.15-59.976 79.463 29.418-48.606 110.358-34.532 129.24 8.96zM399.364 383.864c15.137 55.632-53.11 102.044-110.637 67.772-1.035 1.981-.075 6.14-5.96 11.53-3.09 2.83-7.85 4.403-12.949 5.21 12.672 2.873 18.301 23.987 13.28 34.897-3.552 7.715-10.031 11.12-17.643 13.454 12.338 14.809 35.274 29.238 54.049 30.288 19.032 1.064 44.95-8.272 55.878-13.49 7.012 7.25 19.582 27.407 21.483 53.656 1.978 27.315-7.087 48.527-22.583 59.63-56.492 38.528-121.873 11.401-130.045-45.669-31.411 3.413-41.209 19.612-52.91 37.757 2.582-13.185 1.151-26.752-1.287-39.99-8.922-42.202-46.306-63.397-73.676-66.909 24.006 10.54 37.748 22.757 49.224 42.91 18.188 33.705 7.416 76.718-19.302 104.17-13.463 13.83-59.74 20.597-59.74 20.597 14.222 4.784 32.237 4.545 39.506 3.444 8.879-1.345 24.03-8.703 29.832-12.53-11.636 15.52-13.103 35.817-13.879 54.136h10.746c-3.476-24.314 8.146-46.454 24.734-63.242 27.429-27.054 77.51-23.347 103.226 3.97 15.143 16.085 21.117 37.68 21.117 59.272h22.057c25.55-81.957 95.346-128.215 171.388-125.448 19.502.71 42.205 6.752 68.866 21.448-58.814 16.686-77.654 62.29-63.654 104h15.308c-13.23-42.774 9.975-65.709 17.629-71.376 14.228-11.218 35.796-14.639 53.271-11.341 34.864 6.578 54.276 47.464 41.307 82.717h116.727c0-50.564-.509-101.641 0-152.363-55.095 32.657-134.042 24.38-177.022-5.473-29.035-20.166-44.899-50.325-46.924-77.794 36.305-7.655 56.104-30.541 63.4-57.415-52.618-16.462-32.25-92.195 13.672-79.798 10.348-41.098-9.266-96.81-35.228-108.694 35.228 108.694-77.995 162.684-163.261 120.674zm-135.168 33.83c-4.902 19.615-16.509 28.265-26.719 31.606-6.404 2.096-13.365 3.79-20.022 3.79 8.553 2.92 29.745 5.084 44.623-6.616.288-.227 13.723-7.258 17.483-34.997.76-19.968-9.253-40.196-26.834-48.722-6.093-2.955-18.139-4.112-27.883-2.655 36.793 8.47 43.238 42.042 39.352 57.593zm374.689 28.47c-19.19 2.338-33.298 18.294-36.703 30.563 22.588-10.566 47.715-14.919 64.97-2.954 30.698 21.285 27.23 48.746 18.848 79.795 17.506-10.664 40.623-31.668 29.996-56.477 10.515 1.064 21.494-1.909 28.731-9.867v-95.103c0 72.846-55.831 93.48-105.842 54.042zM426.56 436.144c4.833-1.048 10.183.142 14.895.744 24.143 3.083 43.72 24.346 45.783 48.566 2.31 27.12-17.391 53.214-44.334 58.083-4.77.862-9.59.716-14.177.147-10.569-1.313-20.443-3.847-29.09-10.703-23.56-18.678-27.132-54.432-8.437-77.813 8.928-11.166 21.966-16.119 35.36-19.024M62.967 704.815c14.895 8.428 19.62 22.574 22.256 39.912h20.232c-1.59-12.146-8.78-24.4-16.633-33.448-1.573-1.811-12.163-13.96-33.798-17.295-17.172-2.647-31.287 1.578-41.766 8.641 17.247-4.03 37.055-4.97 49.71 2.19z' fill-opacity='.154'/%3E%3Cpath d='M229.5 492.375a22.5 22.5 0 0 0-22.5 22.5 22.5 22.5 0 0 0 5.588 14.826 22.938 22.938 0 0 1-1.088-6.889 22.938 22.938 0 0 1 22.938-22.937 22.938 22.938 0 0 1 15.832 6.35 22.5 22.5 0 0 0-20.77-13.85z' fill='%23e3e3e3'/%3E%3C/svg%3E");
+}
+ 
+#header {
+    background: linear-gradient(to bottom, rgba(var(--global-black-color), 0.5) -10%, rgba(var(--global-black-color), 0.15), rgba(var(--global-dark-color), 0) 75%);
+}
+ 
+#header h2 {
+    font-weight: 200;
+}
+ 
+#header h2 span {
+    text-shadow: 0.05rem 0.05rem 0rem rgb(var(--global-pale-color)), -0.05rem 0.05rem 0rem rgb(var(--global-pale-color)), 0.05rem -0.05rem 0rem rgb(var(--global-pale-color)), -0.05rem -0.05rem 0rem rgb(var(--global-pale-color));
+}
+ 
+#header-extra-div-1 {
+    border-bottom: unset;
+    box-shadow: 0 -7.5rem 7.5rem 5rem rgb(var(--global-black-color));
+}
+ 
+#extra-div-1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(15em + 25vh + 5vw);
+    background-image: var(--bg-1);
+    background-size: 100% 100%;
+    background-position: top;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+ 
+#extra-div-2 {
+    --mask: linear-gradient(175deg, black 0, transparent calc(90% - 5vw));
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(10em + 25vh + 5vw);
+    background-image: var(--bg-2);
+    background-size: 100% 100%;
+    background-position: top;
+    background-repeat: no-repeat;
+    z-index: -2;
+    mask: var(--mask);
+    -webkit-mask: var(--mask);
+}
+ 
+#content-wrap {
+    margin: calc(0px - var(--header-height) - var(--topbar-height)) 0 0;
+}
+ 
+#main-content {
+    margin: 0 auto 5vh;
+    padding: 1.5em;
+    box-shadow: 0 0 1.5rem -1rem rgb(var(--global-shadow));
+    background: rgba(var(--content-bg));
+    box-sizing: border-box;
+}
+ 
+:is(.bibitems, .footnotes-footer) .title, #main-content h1 {
+    color: rgb(var(--global-accent-1));
+}
+ 
+.handwrite {
+    font-family: var(--handwrite);
+}
+ 
+.hovertip {
+    --title-font: var(--handwrite);
+}
+ 
+.dark-bg {
+    --link-primary: var(--global-pale-color);
+    --link-hover: var(--global-light-color);
+    --link-primary: var(--global-light-color);
+}
+ 
+.shadow {
+    box-shadow: 0 0.2rem 0.5rem -0.2rem rgba(var(--global-shadow), .8);
+}
+ 
+.dropshadow {
+    box-shadow: 0 0.2rem 1rem -0.5rem rgba(var(--global-shadow), .6);
+}
+ 
+.serif-text {
+    max-width: max(100%, 15rem);
+    font-family: var(--serif);
+    color: rgb(var(--global-black-color));
+    margin: 1rem auto;
+font-size: 1em;
+    font-weight: 350;
+}
+ 
+.fakemail {
+    position: relative;
+    padding-top: 2.5rem;
+}
+ 
+.fakemail::before {
+    content: attr(data-title);
+    display: flex;
+    height: 1.8rem;
+    position: absolute;
+    top: 0.5rem;
+    left: 1rem;
+    font-size: 1rem;
+    color: rgb(var(--global-black-color));
+    font-family: var(--serif);
+    align-items: center;
+}
+ 
+.fakemail::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    height: 1.5rem;
+    width: 3rem;
+    background-image: var(--meta-toolbar);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+ 
+.block.curved {
+    margin: 1rem auto;
+    background-image: var(--curvedsvg);
+    background-size: auto max(80%, 7.5rem);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+ 
+.styled {
+    padding-left: 2.5rem;
+    position: relative;
+}
+ 
+.styled::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    width: 0.4rem;
+    height: 100%;
+    background-color: rgb(var(--global-accent-1));
+    box-shadow: 0.05rem 0.1rem 0.1rem rgba(var(--global-shadow), .6);
+}
+ 
+.dark-bg.styled {
+    --dark-block-bg: var(--global-black-color);
+    color: rgb(var(--dark-block-txt));
+}
+ 
+@media only screen and (max-width: 767px) {
+    :root {
+        --bg-1: url(http://brsandbox-pro.wikidot.com/local--files/beijin/zhai-hudie-qian-2);
+        --bg-2: url(http://brsandbox-pro.wikidot.com/local--files/beijin/zhai-hudie-hou-2);
+    }
+}
